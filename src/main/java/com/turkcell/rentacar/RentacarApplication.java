@@ -1,0 +1,15 @@
+package com.turkcell.rentacar;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class RentacarApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(RentacarApplication.class, args);
+	}
+
+	//todo: Fuel, Tranmission, Model nesneleri için CRUD operasyonlarını yazınız. Brand için CRUD tamamlayınız. add update delete getall getById sadece nameleri var
+
+}
