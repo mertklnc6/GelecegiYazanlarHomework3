@@ -1,13 +1,17 @@
 package com.turkcell.rentacar.api.controllers;
 
-import com.turkcell.rentacar.business.abstracts.IService;
-import com.turkcell.rentacar.entities.concretes.Brand;
-import com.turkcell.rentacar.entities.concretes.Brand;
+import com.turkcell.rentacar.business.abstracts.BrandService;
+import com.turkcell.rentacar.business.dtos.requests.brands.CreateBrandRequest;
+import com.turkcell.rentacar.business.dtos.requests.brands.GetBrandRequest;
+import com.turkcell.rentacar.business.dtos.requests.brands.UpdateBrandRequest;
+import com.turkcell.rentacar.business.dtos.responses.brands.CreatedBrandResponse;
+import com.turkcell.rentacar.business.dtos.responses.brands.DeletedBrandResponse;
+import com.turkcell.rentacar.business.dtos.responses.brands.GotBrandResponse;
+import com.turkcell.rentacar.business.dtos.responses.brands.UpdatedBrandResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -15,39 +19,35 @@ import java.util.List;
 @RequestMapping("api/v1/brands")
 public class BrandsController {
 
-    private IService<Brand> service; //IoC inversion of control
+    private BrandService brandService; //IoC inversion of control
+
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public Brand add(@RequestBody Brand brand)
-    {
-        return service.add(brand);
+    public CreatedBrandResponse add(@RequestBody CreateBrandRequest createBrandRequest){
+        return brandService.add(createBrandRequest);
     }
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
-    public List<Brand> getAll(){
-        return service.getAll();
+    public List<GotBrandResponse> getAll(){
+        return brandService.getAll();
     }
-
-    @GetMapping("/{id}")
+//
+    @GetMapping("/get/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Brand getById(int id){
+    public GotBrandResponse getById(int id){
 
-        return service.getById(id);
+        return brandService.getById(id);
     }
     @PutMapping("/update")
     @ResponseStatus(HttpStatus.OK)
-    public Brand update(@RequestBody int id,Brand brand){
-        try {
-            return service.update(id, brand);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public UpdatedBrandResponse update(@RequestBody UpdateBrandRequest updateBrandRequest){
+        return brandService.update(updateBrandRequest);
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void delete(Brand brand){
-        service.delete(brand);
+    public DeletedBrandResponse delete(@RequestBody int id){
+        return brandService.delete(id);
     }
 }
