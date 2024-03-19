@@ -1,51 +1,52 @@
 package com.turkcell.rentacar.api.controllers;
 
-import com.turkcell.rentacar.business.abstracts.IService;
-import com.turkcell.rentacar.entities.concretes.Fuel;
+import com.turkcell.rentacar.business.abstracts.FuelService;
+import com.turkcell.rentacar.business.dtos.requests.fuels.CreateFuelRequest;
+import com.turkcell.rentacar.business.dtos.requests.fuels.UpdateFuelRequest;
+import com.turkcell.rentacar.business.dtos.responses.fuels.CreatedFuelResponse;
+import com.turkcell.rentacar.business.dtos.responses.fuels.DeletedFuelResponse;
+import com.turkcell.rentacar.business.dtos.responses.fuels.GotFuelResponse;
+import com.turkcell.rentacar.business.dtos.responses.fuels.UpdatedFuelResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.List;
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("api/v1/fuels")
 public class FuelController {
-    private IService<Fuel> service;
+
+    private FuelService fuelService; //IoC inversion of control
+
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public Fuel add(@RequestBody Fuel fuel)
-    {
-        return service.add(fuel);
+    public CreatedFuelResponse add(@RequestBody CreateFuelRequest createFuelRequest){
+        return fuelService.add(createFuelRequest);
     }
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
-    public List<Fuel> getAll(){
-        return service.getAll();
+    public List<GotFuelResponse> getAll(){
+        return fuelService.getAll();
     }
-
-    @GetMapping("/{id}")
+//
+    @GetMapping("/get/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Fuel getById(int id){
+    public GotFuelResponse getById(int id){
 
-        return service.getById(id);
+        return fuelService.getById(id);
     }
     @PutMapping("/update")
     @ResponseStatus(HttpStatus.OK)
-    public Fuel update(@RequestBody int id,Fuel fuel){
-        try {
-            return service.update(id, fuel);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public UpdatedFuelResponse update(@RequestBody UpdateFuelRequest updateFuelRequest){
+        return fuelService.update(updateFuelRequest);
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void delete(Fuel fuel){
-        service.delete(fuel);
+    public DeletedFuelResponse delete(@RequestBody int id){
+        return fuelService.delete(id);
     }
 }
