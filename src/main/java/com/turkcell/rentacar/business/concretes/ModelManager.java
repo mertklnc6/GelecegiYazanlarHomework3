@@ -68,6 +68,7 @@ public class ModelManager implements ModelService {
         Model model = this.modelRepository.findById(id).orElse(null);
         if(model != null){
             model.setDeleted(true);
+            model.setDeletedDate(LocalDateTime.now());
             return this.modelMapperService.forResponse().map(model,DeletedModelResponse.class);
         }
         return null;

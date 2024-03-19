@@ -66,6 +66,7 @@ public class FuelManager implements FuelService {
         Fuel fuel = this.fuelRepository.findById(id).orElse(null);
         if(fuel != null){
             fuel.setDeleted(true);
+            fuel.setDeletedDate(LocalDateTime.now());
             return this.modelMapperService.forResponse().map(fuel,DeletedFuelResponse.class);
         }
         return null;

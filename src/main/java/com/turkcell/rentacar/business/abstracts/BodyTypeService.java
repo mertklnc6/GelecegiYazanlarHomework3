@@ -17,5 +17,4 @@ public interface BodyTypeService {
     public UpdatedBodyTypeResponse update(UpdateBodyTypeRequest updateBodyTypeRequest);
 
     public DeletedBodyTypeResponse delete(int id);
-
 }

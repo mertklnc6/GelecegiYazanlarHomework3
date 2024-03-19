@@ -72,6 +72,7 @@ public class BrandManager implements BrandService {
         Brand brand = this.brandRepository.findById(id).orElse(null);
         if(brand != null){
             brand.setDeleted(true);
+            brand.setDeletedDate(LocalDateTime.now());
             return this.modelMapperService.forResponse().map(brand,DeletedBrandResponse.class);
         }
         return null;
