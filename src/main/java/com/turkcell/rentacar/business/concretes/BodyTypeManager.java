@@ -70,6 +70,7 @@ public class BodyTypeManager implements BodyTypeService {
         BodyType bodyType = this.bodyTypeRepository.findById(id).orElse(null);
         if(bodyType != null){
             bodyType.setDeleted(true);
+            bodyType.setDeletedDate(LocalDateTime.now());
             return this.modelMapperService.forResponse().map(bodyType,DeletedBodyTypeResponse.class);
         }
         return null;
