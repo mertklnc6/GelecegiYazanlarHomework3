@@ -8,6 +8,7 @@ import com.turkcell.rentacar.business.dtos.responses.brands.CreatedBrandResponse
 import com.turkcell.rentacar.business.dtos.responses.brands.DeletedBrandResponse;
 import com.turkcell.rentacar.business.dtos.responses.brands.GotBrandResponse;
 import com.turkcell.rentacar.business.dtos.responses.brands.UpdatedBrandResponse;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,7 @@ public class BrandsController {
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public CreatedBrandResponse add(@RequestBody CreateBrandRequest createBrandRequest){
+    public CreatedBrandResponse add(@Valid @RequestBody CreateBrandRequest createBrandRequest){
         return brandService.add(createBrandRequest);
     }
     @GetMapping()
@@ -35,19 +36,19 @@ public class BrandsController {
 //
     @GetMapping("/get/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public GotBrandResponse getById(int id){
+    public GotBrandResponse getById(@PathVariable int id){
 
         return brandService.getById(id);
     }
     @PutMapping("/update")
     @ResponseStatus(HttpStatus.OK)
-    public UpdatedBrandResponse update(@RequestBody UpdateBrandRequest updateBrandRequest){
+    public UpdatedBrandResponse update(@Valid @RequestBody UpdateBrandRequest updateBrandRequest){
         return brandService.update(updateBrandRequest);
     }
 
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public DeletedBrandResponse delete(@RequestBody int id){
+    public DeletedBrandResponse delete(@PathVariable int id){
         return brandService.delete(id);
     }
 }
