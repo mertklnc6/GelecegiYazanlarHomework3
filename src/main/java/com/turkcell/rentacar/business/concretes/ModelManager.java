@@ -8,13 +8,20 @@ import com.turkcell.rentacar.business.dtos.responses.models.DeletedModelResponse
 import com.turkcell.rentacar.business.dtos.responses.models.GotModelResponse;
 import com.turkcell.rentacar.business.dtos.responses.models.UpdatedModelResponse;
 import com.turkcell.rentacar.core.utilities.mapping.ModelMapperService;
+import com.turkcell.rentacar.dataAccess.abstracts.BrandRepository;
+import com.turkcell.rentacar.dataAccess.abstracts.FuelRepository;
 import com.turkcell.rentacar.dataAccess.abstracts.ModelRepository;
+import com.turkcell.rentacar.dataAccess.abstracts.TransmissionRepository;
+import com.turkcell.rentacar.entities.concretes.Brand;
+import com.turkcell.rentacar.entities.concretes.Fuel;
 import com.turkcell.rentacar.entities.concretes.Model;
+import com.turkcell.rentacar.entities.concretes.Transmission;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -22,22 +29,25 @@ import java.util.stream.Collectors;
 public class ModelManager implements ModelService {
 
     private ModelRepository modelRepository;
+    private BrandRepository brandRepository;
+    private FuelRepository fuelRepository;
+    private TransmissionRepository transmissionRepository;
     private ModelMapperService modelMapperService;
 
 
     @Override
     public CreatedModelResponse add(CreateModelRequest createModelRequest) {
-        Model model = this.modelMapperService.forRequest().map(createModelRequest,Model.class);
+        Model model = this.modelMapperService.forRequest().map(createModelRequest, Model.class);
         model.setCreatedDate(LocalDateTime.now());
-        Model createdModel =  modelRepository.save(model);
-        CreatedModelResponse createdModelResponse = this.modelMapperService.forResponse().map(createdModel,CreatedModelResponse.class);
-        return createdModelResponse;
+        Model createdModel = modelRepository.save(model);
+        return this.modelMapperService.forResponse().map(createdModel, CreatedModelResponse.class);
+
     }
 
     @Override
     public GotModelResponse getById(int id) {
         Model model = this.modelRepository.findById(id).orElse(null);
-        if(model != null){
+        if (model != null) {
             GotModelResponse gotModelResponse = this.modelMapperService.forResponse().map(model, GotModelResponse.class);
             return gotModelResponse;
         } else {
@@ -48,17 +58,17 @@ public class ModelManager implements ModelService {
     @Override
     public List<GotModelResponse> getAll() {
         List<Model> models = this.modelRepository.findAll();
-        return models.stream().map(model -> this.modelMapperService.forResponse().map(model,GotModelResponse.class)).collect(Collectors.toList());
+        return models.stream().map(model -> this.modelMapperService.forResponse().map(model, GotModelResponse.class)).collect(Collectors.toList());
     }
 
     @Override
     public UpdatedModelResponse update(UpdateModelRequest updateModelRequest) {
         Model model = modelRepository.findById(updateModelRequest.getId()).orElse(null);
-        if(model != null){
+        if (model != null) {
             model.setName(updateModelRequest.getName());
             model.setUpdatedDate(LocalDateTime.now());
             modelRepository.save(model);
-            return this.modelMapperService.forResponse().map(model,UpdatedModelResponse.class);
+            return this.modelMapperService.forResponse().map(model, UpdatedModelResponse.class);
         }
         return null;
     }
@@ -66,9 +76,9 @@ public class ModelManager implements ModelService {
     @Override
     public DeletedModelResponse delete(int id) {
         Model model = this.modelRepository.findById(id).orElse(null);
-        if(model != null){
+        if (model != null) {
             model.setDeletedDate(LocalDateTime.now());
-            return this.modelMapperService.forResponse().map(model,DeletedModelResponse.class);
+            return this.modelMapperService.forResponse().map(model, DeletedModelResponse.class);
         }
         return null;
     }

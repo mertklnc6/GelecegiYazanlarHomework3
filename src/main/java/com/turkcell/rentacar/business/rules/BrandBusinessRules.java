@@ -27,8 +27,8 @@ public class BrandBusinessRules {
         }
     }
     public void processActiveBrandsOnly() {
-        List<Brand> optionalBrands = brandRepository.findByDeletedDateIsNull();
-        if (!optionalBrands.isEmpty()) {
+        List<Brand> brands = brandRepository.findByDeletedDateIsNull();
+        if (brands.isEmpty()) {
             throw new BusinessException("AllBrandsAreDeletedOrThereAreNoBrands");
         }
     }
