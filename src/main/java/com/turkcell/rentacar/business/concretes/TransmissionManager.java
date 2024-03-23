@@ -68,7 +68,6 @@ public class TransmissionManager implements TransmissionService {
     public DeletedTransmissionResponse delete(int id) {
         Transmission transmission = this.transmissionRepository.findById(id).orElse(null);
         if(transmission != null){
-            transmission.setDeleted(true);
             transmission.setDeletedDate(LocalDateTime.now());
             return this.modelMapperService.forResponse().map(transmission,DeletedTransmissionResponse.class);
         }

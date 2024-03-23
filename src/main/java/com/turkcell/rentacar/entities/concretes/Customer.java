@@ -1,5 +1,4 @@
 package com.turkcell.rentacar.entities.concretes;
-
 import com.turkcell.rentacar.core.entities.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,21 +7,23 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Entity
-@Table(name = "fuels")
-public class Fuel extends BaseEntity {
+@Table(name = "customers")
 
-    @Column(name = "name")
-    private String name;
+public class Customer extends BaseEntity {
+    @Column(name = "findex_score")
+    private double findexScore;
+    @Column(name = "email")
+    private String eMail;
+    @Column(name="phone_number")
+    private String phoneNumber;
 
-    @OneToMany(mappedBy = "fuel")
-    private List<Model> models;
-
+    @OneToMany(mappedBy = "customer")
+    private List<Rental> rentals;
 
 }

@@ -25,30 +25,33 @@ public class BrandsController {
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public CreatedBrandResponse add(@Valid @RequestBody CreateBrandRequest createBrandRequest){
+    public CreatedBrandResponse add(@Valid @RequestBody CreateBrandRequest createBrandRequest) {
         return brandService.add(createBrandRequest);
     }
+
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
-    public List<GotBrandResponse> getAll(){
+    public List<GotBrandResponse> getAll() {
         return brandService.getAll();
     }
-//
+
+    //
     @GetMapping("/get/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public GotBrandResponse getById(@PathVariable int id){
+    public GotBrandResponse getById(@PathVariable int id) {
 
         return brandService.getById(id);
     }
+
     @PutMapping("/update")
     @ResponseStatus(HttpStatus.OK)
-    public UpdatedBrandResponse update(@Valid @RequestBody UpdateBrandRequest updateBrandRequest){
+    public UpdatedBrandResponse update(@Valid @RequestBody UpdateBrandRequest updateBrandRequest) {
         return brandService.update(updateBrandRequest);
     }
 
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public DeletedBrandResponse delete(@PathVariable int id){
+    public DeletedBrandResponse delete(@PathVariable int id) {
         return brandService.delete(id);
     }
 }

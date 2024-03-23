@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -14,17 +16,20 @@ import lombok.NoArgsConstructor;
 public class Model extends BaseEntity {
     @Column(name = "name")
     private String name;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "brand_id", referencedColumnName = "id")
-//    private Brand brand;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "fuel_id", referencedColumnName = "id")
-//    private Fuel fuel;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "transmission_id", referencedColumnName = "id")
-//    private Transmission transmission;
+
+    @ManyToOne
+    @JoinColumn(name="brand_id")
+    private Brand brand;
+
+    @ManyToOne
+    @JoinColumn(name="fuel_id")
+    private Fuel fuel;
+
+    @ManyToOne
+    @JoinColumn(name="transmission_id")
+    private Transmission transmission;
+
+    @OneToMany(mappedBy = "model")
+    private List<Car> cars;
 
 }

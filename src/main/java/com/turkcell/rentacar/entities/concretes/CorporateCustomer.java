@@ -1,6 +1,5 @@
 package com.turkcell.rentacar.entities.concretes;
 
-import com.turkcell.rentacar.core.entities.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -12,9 +11,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Entity
-@Table(name = "bodyTypes")
-public class BodyType extends BaseEntity {
-    @Column(name = "name")
+@Table(name = "corporate_customers")
+public class CorporateCustomer extends Customer{
+    @Column(name="corporate_name")
     private String name;
-
+    @Column(name = "tax_id_number")
+    private String taxIdNumber;
 }
+

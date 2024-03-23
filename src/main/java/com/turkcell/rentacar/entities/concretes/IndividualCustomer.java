@@ -1,28 +1,24 @@
 package com.turkcell.rentacar.entities.concretes;
 
-import com.turkcell.rentacar.core.entities.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Entity
-@Table(name = "fuels")
-public class Fuel extends BaseEntity {
-
-    @Column(name = "name")
-    private String name;
-
-    @OneToMany(mappedBy = "fuel")
-    private List<Model> models;
+@Table(name = "individual_customers")
+public class IndividualCustomer extends Customer{
+    @Column(name="first_name")
+    private String firstName;
+    @Column(name="last_name")
+    private String lastName;
+    @Column(name="nationality_id")
+    private String nationalityId;
 
 
 }

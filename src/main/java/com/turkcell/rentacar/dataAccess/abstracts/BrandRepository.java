@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface BrandRepository extends JpaRepository<Brand,Integer> {
 
     Optional<Brand> findByNameIgnoreCase(String name);
-    Optional<List<Brand>> findByIsDeletedFalse();
+    List<Brand> findByDeletedDateIsNull();
 
 }
 //select * from brands where name = @name or AbcField = @abcField gibi çalışır.(reserve kelimeler)

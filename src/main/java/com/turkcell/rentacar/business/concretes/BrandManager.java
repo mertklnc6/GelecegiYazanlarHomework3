@@ -37,8 +37,7 @@ public class BrandManager implements BrandService {
         Brand brand = this.modelMapperService.forRequest().map(createBrandRequest,Brand.class);
         brand.setCreatedDate(LocalDateTime.now());
         Brand createdBrand =  brandRepository.save(brand);
-        CreatedBrandResponse createdBrandResponse = this.modelMapperService.forResponse().map(createdBrand,CreatedBrandResponse.class);
-        return createdBrandResponse;
+        return this.modelMapperService.forResponse().map(createdBrand,CreatedBrandResponse.class);
     }
 
     @Override
@@ -70,10 +69,8 @@ public class BrandManager implements BrandService {
     public DeletedBrandResponse delete(int id) {
         brandBusinessRules.brandIdCanNotFound(id);
         Brand brand = this.brandRepository.findById(id).orElse(null);
-        brand.setDeleted(true);
         brand.setDeletedDate(LocalDateTime.now());
         return this.modelMapperService.forResponse().map(brand,DeletedBrandResponse.class);
-
 
     }
 
