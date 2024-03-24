@@ -1,4 +1,4 @@
-package com.turkcell.rentacar.business.dtos.responses.models;
+package com.turkcell.rentacar.business.dtos.responses.cars;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,11 +7,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class GotModelResponse {
+public class GotCarResponse {
     private int id;
     private String name;
     private String brandName;
-    private String fuelName;
-    private String transmissionName;
 
+    private String fuelName;
+
+    private String transmissionName;
+    
 }

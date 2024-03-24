@@ -21,12 +21,12 @@ public class FuelController {
     private FuelService fuelService; //IoC inversion of control
 
 
-    @PostMapping("/create")
+    @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
     public CreatedFuelResponse add(@RequestBody CreateFuelRequest createFuelRequest){
         return fuelService.add(createFuelRequest);
     }
-    @GetMapping()
+    @GetMapping("/getAll")
     @ResponseStatus(HttpStatus.OK)
     public List<GotFuelResponse> getAll(){
         return fuelService.getAll();

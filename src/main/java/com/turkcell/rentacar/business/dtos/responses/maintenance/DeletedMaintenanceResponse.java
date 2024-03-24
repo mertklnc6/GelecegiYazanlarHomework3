@@ -1,4 +1,4 @@
-package com.turkcell.rentacar.business.dtos.responses.models;
+package com.turkcell.rentacar.business.dtos.responses.maintenance;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,9 +9,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class CreatedModelResponse {
-    private int id;
-    private String name;
-    private LocalDateTime createdDate;
+public class DeletedMaintenanceResponse {
 
+    private int id;
+
+    private LocalDateTime deletedDate;
 }
