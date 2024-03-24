@@ -23,4 +23,12 @@ public class MaintenanceBusinessRules {
         }
 
     }
+
+    public void checkIfMaintenanceExist(int maintenanceId){
+        Optional<Maintenance> maintenance = maintenanceRepository.findById(maintenanceId);
+
+        if(!maintenance.isPresent()){
+            throw new BusinessException("The maintenance does not exist");
+        }
+    }
 }

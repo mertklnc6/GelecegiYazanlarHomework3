@@ -23,13 +23,13 @@ public class BrandsController {
     private BrandService brandService; //IoC inversion of control
 
 
-    @PostMapping("/create")
+    @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
     public CreatedBrandResponse add(@Valid @RequestBody CreateBrandRequest createBrandRequest) {
         return brandService.add(createBrandRequest);
     }
 
-    @GetMapping()
+    @GetMapping("/getAll")
     @ResponseStatus(HttpStatus.OK)
     public List<GotBrandResponse> getAll() {
         return brandService.getAll();

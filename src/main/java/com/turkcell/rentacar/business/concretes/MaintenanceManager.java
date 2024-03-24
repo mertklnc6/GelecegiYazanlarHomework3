@@ -2,7 +2,11 @@ package com.turkcell.rentacar.business.concretes;
 
 import com.turkcell.rentacar.business.abstracts.MaintenanceService;
 import com.turkcell.rentacar.business.dtos.requests.maintenance.CreateMaintenanceRequest;
+import com.turkcell.rentacar.business.dtos.requests.maintenance.UpdateMaintenanceRequest;
 import com.turkcell.rentacar.business.dtos.responses.maintenance.CreatedMaintenanceResponse;
+import com.turkcell.rentacar.business.dtos.responses.maintenance.DeletedMaintenanceResponse;
+import com.turkcell.rentacar.business.dtos.responses.maintenance.GotMaintenanceResponse;
+import com.turkcell.rentacar.business.dtos.responses.maintenance.UpdatedMaintenanceResponse;
 import com.turkcell.rentacar.business.rules.CarBusinessRules;
 import com.turkcell.rentacar.business.rules.MaintenanceBusinessRules;
 import com.turkcell.rentacar.core.utilities.mapping.ModelMapperService;
@@ -11,6 +15,7 @@ import com.turkcell.rentacar.entities.concretes.Maintenance;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,8 +40,8 @@ public class MaintenanceManager implements MaintenanceService {
         Maintenance maintenance =
                 this.modelMapperService.forRequest().map(createMaintenanceRequest,Maintenance.class);
 
-        //Optional<Car>  setCar = this.carRepository.findById(createMaintenanceRequest.getCarId());
-        //maintenance.setCar(setCar.get());
+
+        maintenance.setDateSent(LocalDateTime.now());
 
         this.maintenanceRepository.save(maintenance);
 
@@ -47,12 +52,36 @@ public class MaintenanceManager implements MaintenanceService {
     }
 
     @Override
-    public List<CreatedMaintenanceResponse>  getAll() {
+    public List<GotMaintenanceResponse>  getAll() {
         List<Maintenance> maintenanceList = this.maintenanceRepository.findAll();
 
         return maintenanceList.stream().map(maintenance -> this.modelMapperService.forResponse().
-                map(maintenance, CreatedMaintenanceResponse.class)).collect(Collectors.toList());
+                map(maintenance, GotMaintenanceResponse.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public GotMaintenanceResponse getById(int id) {
+        Maintenance maintenance = this.maintenanceRepository.findById(id).orElse(null);
+        return modelMapperService.forResponse().map(maintenance, GotMaintenanceResponse.class);
     }
 
 
+    @Override
+    public UpdatedMaintenanceResponse update(UpdateMaintenanceRequest updateMaintenanceRequest) {
+        maintenanceBusinessRules.checkIfMaintenanceExist(updateMaintenanceRequest.getId());
+        Maintenance maintenance = this.modelMapperService.forRequest().map(updateMaintenanceRequest, Maintenance.class);
+        maintenance.setDateReturned(LocalDateTime.now());
+
+        Maintenance updatedMaintenance = maintenanceRepository.save(maintenance);
+
+        return this.modelMapperService.forResponse().map(updatedMaintenance, UpdatedMaintenanceResponse.class);
+    }
+
+    @Override
+    public DeletedMaintenanceResponse delete(int id) {
+        maintenanceBusinessRules.checkIfMaintenanceExist(id);
+        Maintenance maintenance = this.maintenanceRepository.findById(id).orElse(null);
+        maintenance.setDeletedDate(LocalDateTime.now());
+        return modelMapperService.forResponse().map(maintenance, DeletedMaintenanceResponse.class);
+    }
 }
