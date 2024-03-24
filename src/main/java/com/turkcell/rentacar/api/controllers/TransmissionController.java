@@ -21,12 +21,12 @@ public class TransmissionController {
     private TransmissionService transmissionService; //IoC inversion of control
 
 
-    @PostMapping("/create")
+    @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
     public CreatedTransmissionResponse add(@RequestBody CreateTransmissionRequest createTransmissionRequest){
         return transmissionService.add(createTransmissionRequest);
     }
-    @GetMapping()
+    @GetMapping("/getAll")
     @ResponseStatus(HttpStatus.OK)
     public List<GotTransmissionResponse> getAll(){
         return transmissionService.getAll();

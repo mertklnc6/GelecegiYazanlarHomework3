@@ -20,13 +20,13 @@ public class CarsController {
     private CarService carService; //IoC inversion of control
 
 
-    @PostMapping("/create")
+    @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
     public CreatedCarResponse add(@Valid @RequestBody CreateCarRequest createCarRequest) {
         return carService.add(createCarRequest);
     }
 
-    @GetMapping()
+    @GetMapping("/getAll")
     @ResponseStatus(HttpStatus.OK)
     public List<GotCarResponse> getAll() {
         return carService.getAll();

@@ -13,12 +13,5 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class CreateMaintenanceRequest {
 
-    @NotNull
-    private LocalDateTime dateSent;
-    @Nullable
-    private LocalDateTime dateReturned;
-
     private int carId;
-
-
 }

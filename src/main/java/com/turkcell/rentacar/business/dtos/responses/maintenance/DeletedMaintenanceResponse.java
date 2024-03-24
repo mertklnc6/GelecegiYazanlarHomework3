@@ -6,15 +6,12 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreatedMaintenanceResponse {
+@Data
+public class DeletedMaintenanceResponse {
 
     private int id;
 
-    private LocalDateTime dateSent;
-
-    private String carName;
-
+    private LocalDateTime deletedDate;
 }

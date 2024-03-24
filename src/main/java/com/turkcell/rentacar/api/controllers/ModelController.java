@@ -21,12 +21,12 @@ public class ModelController {
     private ModelService modelService; //IoC inversion of control
 
 
-    @PostMapping("/create")
+    @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
     public CreatedModelResponse add(@RequestBody CreateModelRequest createModelRequest){
         return modelService.add(createModelRequest);
     }
-    @GetMapping()
+    @GetMapping("/getAll")
     @ResponseStatus(HttpStatus.OK)
     public List<GotModelResponse> getAll(){
         return modelService.getAll();
