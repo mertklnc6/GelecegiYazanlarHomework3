@@ -3,10 +3,8 @@ package com.turkcell.rentacar.business.concretes;
 import com.turkcell.rentacar.business.abstracts.FuelService;
 import com.turkcell.rentacar.business.dtos.requests.fuels.CreateFuelRequest;
 import com.turkcell.rentacar.business.dtos.requests.fuels.UpdateFuelRequest;
-import com.turkcell.rentacar.business.dtos.responses.fuels.CreatedFuelResponse;
-import com.turkcell.rentacar.business.dtos.responses.fuels.DeletedFuelResponse;
-import com.turkcell.rentacar.business.dtos.responses.fuels.GotFuelResponse;
-import com.turkcell.rentacar.business.dtos.responses.fuels.UpdatedFuelResponse;
+import com.turkcell.rentacar.business.dtos.responses.fuels.*;
+import com.turkcell.rentacar.business.rules.FuelBusinessRules;
 import com.turkcell.rentacar.core.utilities.mapping.ModelMapperService;
 import com.turkcell.rentacar.dataAccess.abstracts.FuelRepository;
 import com.turkcell.rentacar.entities.concretes.Fuel;
@@ -20,56 +18,47 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Service
 public class FuelManager implements FuelService {
-
     private FuelRepository fuelRepository;
     private ModelMapperService modelMapperService;
+    private FuelBusinessRules fuelBusinessRules;
     @Override
     public CreatedFuelResponse add(CreateFuelRequest createFuelRequest) {
         Fuel fuel = this.modelMapperService.forRequest().map(createFuelRequest,Fuel.class);
         fuel.setCreatedDate(LocalDateTime.now());
-        Fuel createdFuel =  fuelRepository.save(fuel);
-        CreatedFuelResponse createdFuelResponse = this.modelMapperService.forResponse().map(createdFuel,CreatedFuelResponse.class);
-        return createdFuelResponse;
+
+        Fuel createdFuel =  this.fuelRepository.save(fuel);
+        return this.modelMapperService.forResponse().map(createdFuel,CreatedFuelResponse.class);
     }
 
     @Override
-    public GotFuelResponse getById(int id) {
+    public GetByIdFuelResponse getById(int id) {
         Fuel fuel = this.fuelRepository.findById(id).orElse(null);
-        if(fuel != null){
-            GotFuelResponse gotFuelResponse = this.modelMapperService.forResponse().map(fuel, GotFuelResponse.class);
-            return gotFuelResponse;
-        } else {
-            return null;
-        }
+        this.fuelBusinessRules.FuelCanNotBeEmpty(fuel.getId());
+        return this.modelMapperService.forResponse().map(fuel,GetByIdFuelResponse.class);
     }
 
     @Override
-    public List<GotFuelResponse> getAll() {
+    public List<GetAllFuelResponse> getAll() {
         List<Fuel> fuels = this.fuelRepository.findAll();
-        return fuels.stream().map(fuel -> this.modelMapperService.forResponse().map(fuel,GotFuelResponse.class)).collect(Collectors.toList());
+        return fuels.stream().map(fuel -> this.modelMapperService.forResponse().
+                map(fuel, GetAllFuelResponse.class)).collect(Collectors.toList());
     }
 
     @Override
     public UpdatedFuelResponse update(UpdateFuelRequest updateFuelRequest) {
-        Fuel fuel = fuelRepository.findById(updateFuelRequest.getId()).orElse(null);
-        if(fuel != null){
-            fuel.setName(updateFuelRequest.getName());
-            fuel.setUpdatedDate(LocalDateTime.now());
-            fuelRepository.save(fuel);
-            return this.modelMapperService.forResponse().map(fuel,UpdatedFuelResponse.class);
-        }
-        return null;
+        this.fuelBusinessRules.FuelCanNotBeEmpty(updateFuelRequest.getId());
+        Fuel fuel = this.modelMapperService.forRequest().map(updateFuelRequest,Fuel.class);
+
+        fuel.setUpdatedDate(LocalDateTime.now());
+        this.fuelRepository.save(fuel);
+        return this.modelMapperService.forResponse().map(fuel,UpdatedFuelResponse.class);
     }
 
     @Override
     public DeletedFuelResponse delete(int id) {
         Fuel fuel = this.fuelRepository.findById(id).orElse(null);
-        if(fuel != null){
-            fuel.setDeletedDate(LocalDateTime.now());
-            return this.modelMapperService.forResponse().map(fuel,DeletedFuelResponse.class);
-        }
-        return null;
+        //Todo Rule eklenecek.
+        fuel.setDeletedDate(LocalDateTime.now());
+        return this.modelMapperService.forResponse().map(fuel,DeletedFuelResponse.class);
     }
-
-
 }

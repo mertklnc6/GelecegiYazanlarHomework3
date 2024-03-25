@@ -24,8 +24,10 @@ public class RentalManager implements RentalService {
     @Override
     public CreatedRentalResponse add(CreateRentalRequest createRentalRequest) {
         Rental rental = this.modelMapperService.forRequest().map(createRentalRequest, Rental.class);
+
         this.rentalBusinessRules.isAvailable(rental);
         this.rentalBusinessRules.findexControl(rental);
+
         rental.setTotalPrice(rentalBusinessRules.calculateDailyPrice(rental));
         return this.modelMapperService.forResponse().map(this.rentalRepository.save(rental), CreatedRentalResponse.class);
     }

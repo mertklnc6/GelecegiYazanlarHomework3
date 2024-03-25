@@ -14,6 +14,7 @@ import java.util.List;
 @Entity
 @Table(name = "models")
 public class Model extends BaseEntity {
+
     @Column(name = "name")
     private String name;
 

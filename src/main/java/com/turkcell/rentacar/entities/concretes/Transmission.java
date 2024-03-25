@@ -16,11 +16,10 @@ import java.util.List;
 @Entity
 @Table(name = "transmissions")
 public class Transmission extends BaseEntity {
+
     @Column(name = "name")
     private String name;
 
     @OneToMany(mappedBy = "transmission")
     private List<Model> models;
-
-
 }

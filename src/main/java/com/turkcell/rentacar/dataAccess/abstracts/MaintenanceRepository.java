@@ -6,9 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface MaintenanceRepository extends JpaRepository<Maintenance,Integer> {
-
-
-
-    Optional<Maintenance> getByCar_Id(int Id);
-
+    Optional<Maintenance> getByCarId(int Id);
 }

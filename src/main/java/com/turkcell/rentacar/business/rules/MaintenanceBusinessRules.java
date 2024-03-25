@@ -18,10 +18,9 @@ public class MaintenanceBusinessRules {
     private final MaintenanceRepository maintenanceRepository;
     private CarRepository carRepository;
     public void checkIfCarInMaintenance(int carId){
-
         Car car = this.carRepository.findById(carId).orElse(null);
         assert car != null;
-        if (!(car.getState() == 1 )){
+        if (!(car.getState() == Car.State.Available )){
             throw new BusinessException("the car is already in maintenance");
         }
     }

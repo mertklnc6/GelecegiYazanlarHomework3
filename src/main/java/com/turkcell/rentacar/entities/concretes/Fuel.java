@@ -23,6 +23,4 @@ public class Fuel extends BaseEntity {
 
     @OneToMany(mappedBy = "fuel")
     private List<Model> models;
-
-
 }

@@ -14,7 +14,6 @@ import java.util.List;
 @Entity
 @Table(name = "cars")
 public class Car extends BaseEntity {
-
     @Column(name = "findex_score")
     private int findexScore;
 
@@ -25,7 +24,7 @@ public class Car extends BaseEntity {
     private String plate;
 
     @Column(name = "state")
-    private int state;      //    @Column(name="state")//1-Available 2-Rented 3-Under Maintenance
+    private State state;
 
     @Column(name = "daily_price")
     private int dailyPrice;
@@ -40,19 +39,18 @@ public class Car extends BaseEntity {
     @OneToMany(mappedBy = "car")
     private List<Rental> rentals;
 
-//    public enum State {
-//        Available(1),
-//        Rented(2),
-//        Under_Maintenance(3);
-//
-//        private final int value;
-//
-//        State(int value) {
-//            this.value = value;
-//        }
-//
-//        public int getValue() {
-//            return value;
-//        }
-//    }
+    public enum State {
+        Available(1),
+        Rented(2),
+        Under_Maintenance(3);
+        private final int value;
+
+        State(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
+    }
 }
