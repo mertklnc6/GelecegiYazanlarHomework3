@@ -1,4 +1,4 @@
-package com.turkcell.rentacar.business.dtos.requests.brands;
+package com.turkcell.rentacar.business.dtos.responses.fuels;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class GetBrandRequest {
+public class GetByIdFuelResponse {
     private int id;
+    private String name;
 }

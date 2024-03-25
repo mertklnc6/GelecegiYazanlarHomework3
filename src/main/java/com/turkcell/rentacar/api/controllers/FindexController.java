@@ -10,4 +10,5 @@ public class FindexController {
     public int getFindexScore(@PathVariable int customerId){
         return ((customerId * 365)/10);
     }
+
 }

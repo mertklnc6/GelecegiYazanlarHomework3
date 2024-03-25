@@ -6,10 +6,11 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 @AllArgsConstructor
-public class FindexServiceAdapter {
-    private final RestTemplate restTemplate;
+public class FindexServiceAdapter implements FindexService{
+    private RestTemplate restTemplate;
+    //RestTemplate Http protokolunu kullanarak Rest istekleri göndermemizi sağlıyor.
     public int getFindexScore(int customerId) {
         String url = "http://localhost:8080/findex/" + customerId;
-        return restTemplate.getForObject(url, Integer.class);
+        return this.restTemplate.getForObject(url, Integer.class);
     }
 }

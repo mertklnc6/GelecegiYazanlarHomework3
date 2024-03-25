@@ -3,10 +3,8 @@ package com.turkcell.rentacar.api.controllers;
 import com.turkcell.rentacar.business.abstracts.FuelService;
 import com.turkcell.rentacar.business.dtos.requests.fuels.CreateFuelRequest;
 import com.turkcell.rentacar.business.dtos.requests.fuels.UpdateFuelRequest;
-import com.turkcell.rentacar.business.dtos.responses.fuels.CreatedFuelResponse;
-import com.turkcell.rentacar.business.dtos.responses.fuels.DeletedFuelResponse;
-import com.turkcell.rentacar.business.dtos.responses.fuels.GotFuelResponse;
-import com.turkcell.rentacar.business.dtos.responses.fuels.UpdatedFuelResponse;
+import com.turkcell.rentacar.business.dtos.responses.brands.GetAllBrandResponse;
+import com.turkcell.rentacar.business.dtos.responses.fuels.*;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -28,13 +26,13 @@ public class FuelController {
     }
     @GetMapping("/getAll")
     @ResponseStatus(HttpStatus.OK)
-    public List<GotFuelResponse> getAll(){
-        return fuelService.getAll();
+    public List<GetAllFuelResponse> getAll(){
+        return this.fuelService.getAll();
     }
 //
     @GetMapping("/get/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public GotFuelResponse getById(int id){
+    public GetByIdFuelResponse getById(int id){
 
         return fuelService.getById(id);
     }
