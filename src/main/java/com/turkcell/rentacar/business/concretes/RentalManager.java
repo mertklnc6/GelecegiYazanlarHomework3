@@ -24,14 +24,11 @@ public class RentalManager implements RentalService {
     @Override
     public CreatedRentalResponse add(CreateRentalRequest createRentalRequest) {
         Rental rental = this.modelMapperService.forRequest().map(createRentalRequest, Rental.class);
-
+        this.rentalBusinessRules.isAvailable(rental);
+        this.rentalBusinessRules.findexControl(rental);
         rental.setTotalPrice(rentalBusinessRules.calculateDailyPrice(rental));
-        CreatedRentalResponse createdRentalResponse = this.modelMapperService.forResponse().map(this.rentalRepository.save(rental), CreatedRentalResponse.class);
-        return createdRentalResponse;
-
-
+        return this.modelMapperService.forResponse().map(this.rentalRepository.save(rental), CreatedRentalResponse.class);
     }
-
     @Override
     public List<GotRentalResponse> getAll() {
         List<Rental> rentalList = rentalRepository.findAll();

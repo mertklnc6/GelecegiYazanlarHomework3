@@ -1,11 +1,12 @@
 package com.turkcell.rentacar.entities.concretes;
-
 import com.turkcell.rentacar.core.entities.BaseEntity;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.util.List;
 
 @NoArgsConstructor
@@ -15,21 +16,12 @@ import java.util.List;
 @Table(name = "customers")
 
 public class Customer extends BaseEntity {
-
-    @Column(name = "findex_score")
-    private double findexScore;
     @Column(name = "email")
     private String eMail;
-    @Column(name = "phone_number")
+    @Column(name="phone_number")
     private String phoneNumber;
 
     @OneToMany(mappedBy = "customer")
     private List<Rental> rentals;
-    @OneToOne
-    @JoinColumn(name = "corporate_id", referencedColumnName = "id")
-    private CorporateCustomer corporateCustomer;
-    @OneToOne
-    @JoinColumn(name = "individual_id", referencedColumnName = "id")
-    private IndividualCustomer individualCustomer;
 
 }

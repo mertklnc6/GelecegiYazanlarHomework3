@@ -10,6 +10,4 @@ import lombok.NoArgsConstructor;
 public class GotBrandResponse {
     private int id;
     private String name;
-    
-    
 }

@@ -23,9 +23,7 @@ public class MaintenancesController {
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
     public CreatedMaintenanceResponse add(@RequestBody CreateMaintenanceRequest createMaintenanceRequest){
-
         return this.maintenanceService.add(createMaintenanceRequest);
-
     }
 
     @GetMapping("/getAll")

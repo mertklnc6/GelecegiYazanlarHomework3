@@ -14,16 +14,22 @@ import java.util.List;
 @Entity
 @Table(name = "cars")
 public class Car extends BaseEntity {
+
+    @Column(name = "findex_score")
+    private int findexScore;
+
     @Column(name = "model_year")
     private int modelYear;
+
     @Column(name = "plate")
     private String plate;
+
     @Column(name = "state")
-    private int state;
-    //    @Column(name="state")//1-Available 2-Rented 3-Under Maintenance
-//    private State state;
+    private int state;      //    @Column(name="state")//1-Available 2-Rented 3-Under Maintenance
+
     @Column(name = "daily_price")
     private int dailyPrice;
+
     @ManyToOne()
     @JoinColumn(name = "model_id")
     private Model model;

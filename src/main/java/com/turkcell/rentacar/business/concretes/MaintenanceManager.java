@@ -36,7 +36,6 @@ public class MaintenanceManager implements MaintenanceService {
         carBusinessRules.checkCarIdExist(createMaintenanceRequest.getCarId());
         maintenanceBusinessRules.checkIfCarInMaintenance(createMaintenanceRequest.getCarId());
 
-
         Maintenance maintenance =
                 this.modelMapperService.forRequest().map(createMaintenanceRequest,Maintenance.class);
 

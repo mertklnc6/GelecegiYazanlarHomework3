@@ -19,7 +19,6 @@ import java.util.List;
 public class CarsController {
     private CarService carService; //IoC inversion of control
 
-
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
     public CreatedCarResponse add(@Valid @RequestBody CreateCarRequest createCarRequest) {
