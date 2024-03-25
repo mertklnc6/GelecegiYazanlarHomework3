@@ -1,6 +1,5 @@
 package com.turkcell.rentacar.business.dtos.responses.cars;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,6 +15,7 @@ public class UpdatedCarResponse {
     private String name;
 
     private String brandName;
+    private int dailyPrice;
 
     private String fuelName;
 
