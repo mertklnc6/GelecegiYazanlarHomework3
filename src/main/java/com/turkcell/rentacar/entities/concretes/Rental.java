@@ -29,6 +29,4 @@ public class Rental extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "car_id")
     private Car car;
-
-
 }

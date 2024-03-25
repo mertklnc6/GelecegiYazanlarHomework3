@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @Data
 public class CreatedCarResponse {
     private int id;
+    private int findexScore;
     private int modelYear;
     private String plate;
     private int state;
@@ -23,5 +24,4 @@ public class CreatedCarResponse {
     private String fuelName;
     private String transmissionName;
     private LocalDateTime createdDate;
-
 }

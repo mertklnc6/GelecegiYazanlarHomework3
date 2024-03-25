@@ -1,5 +1,6 @@
 package com.turkcell.rentacar.business.dtos.requests.cars;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.turkcell.rentacar.entities.concretes.Car;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
@@ -13,6 +14,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class CreateCarRequest {
+    @JsonIgnore
+    private int id;
+    @NotNull
+    private int findexScore;
     @NotNull
     private int modelYear;
     @NotNull

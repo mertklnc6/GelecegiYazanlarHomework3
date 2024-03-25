@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Data
 public class GotRentalResponse {
     private int id;
-    private double totalPrice;
+    private int totalPrice;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
 

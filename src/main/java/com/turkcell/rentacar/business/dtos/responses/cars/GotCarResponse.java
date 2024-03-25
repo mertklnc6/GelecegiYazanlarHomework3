@@ -9,12 +9,12 @@ import lombok.NoArgsConstructor;
 @Data
 public class GotCarResponse {
     private int id;
+    private int findexScore;
     private String name;
     private String brandName;
     private int dailyPrice;
-
+    private int state;
+    private String plate;
     private String fuelName;
-
     private String transmissionName;
-    
 }

@@ -12,16 +12,12 @@ import com.turkcell.rentacar.dataAccess.abstracts.BrandRepository;
 import com.turkcell.rentacar.dataAccess.abstracts.FuelRepository;
 import com.turkcell.rentacar.dataAccess.abstracts.ModelRepository;
 import com.turkcell.rentacar.dataAccess.abstracts.TransmissionRepository;
-import com.turkcell.rentacar.entities.concretes.Brand;
-import com.turkcell.rentacar.entities.concretes.Fuel;
 import com.turkcell.rentacar.entities.concretes.Model;
-import com.turkcell.rentacar.entities.concretes.Transmission;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -29,9 +25,6 @@ import java.util.stream.Collectors;
 public class ModelManager implements ModelService {
 
     private ModelRepository modelRepository;
-    private BrandRepository brandRepository;
-    private FuelRepository fuelRepository;
-    private TransmissionRepository transmissionRepository;
     private ModelMapperService modelMapperService;
 
 
