@@ -2,8 +2,12 @@ package com.turkcell.rentacar.api.controllers;
 
 import com.turkcell.rentacar.business.abstracts.IndividualCustomerService;
 import com.turkcell.rentacar.business.dtos.requests.customer.CreateIndividualCustomerRequest;
+import com.turkcell.rentacar.business.dtos.requests.customer.UpdateIndividualCustomerRequest;
 import com.turkcell.rentacar.business.dtos.responses.customer.CreatedIndividualCustomerResponse;
-import com.turkcell.rentacar.business.dtos.responses.customer.GotIndividualCustomerResponse;
+import com.turkcell.rentacar.business.dtos.responses.customer.DeletedIndividualCustomerResponse;
+import com.turkcell.rentacar.business.dtos.responses.customer.GetAllIndividualCustomerResponse;
+import com.turkcell.rentacar.business.dtos.responses.customer.UpdatedIndividualCustomerResponse;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +28,17 @@ public class IndividualsCustomerController {
     }
     @GetMapping("/getAll")
     @ResponseStatus(HttpStatus.OK)
-    public List<GotIndividualCustomerResponse> getAll(){
+    public List<GetAllIndividualCustomerResponse> getAll(){
         return this.individualCustomerService.getAll();
+    }
+    @PostMapping("/update")
+    @ResponseStatus(HttpStatus.OK)
+    public UpdatedIndividualCustomerResponse update(@RequestBody @Valid UpdateIndividualCustomerRequest updateIndividualCustomerRequest){
+        return this.individualCustomerService.update(updateIndividualCustomerRequest);
+    }
+    @DeleteMapping("/delete/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public DeletedIndividualCustomerResponse delete(@PathVariable int id){
+        return this.individualCustomerService.delete(id);
     }
 }

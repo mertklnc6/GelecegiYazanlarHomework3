@@ -2,12 +2,12 @@ package com.turkcell.rentacar.api.controllers;
 
 import com.turkcell.rentacar.business.abstracts.MaintenanceService;
 import com.turkcell.rentacar.business.dtos.requests.maintenance.CreateMaintenanceRequest;
+import com.turkcell.rentacar.business.dtos.requests.maintenance.TheCarComeFromMaintenanceRequest;
 import com.turkcell.rentacar.business.dtos.requests.maintenance.UpdateMaintenanceRequest;
 import com.turkcell.rentacar.business.dtos.responses.maintenance.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -39,5 +39,10 @@ public class MaintenancesController {
     @ResponseStatus(HttpStatus.OK)
     public DeletedMaintenanceResponse delete(@PathVariable int id){
         return this.maintenanceService.delete(id);
+    }
+    @PostMapping("/theCarComeFromMaintenance")
+    @ResponseStatus(HttpStatus.OK)
+    public TheCarComeFromMaintenanceResponse theCarComeFromMaintenance(@RequestBody TheCarComeFromMaintenanceRequest theCarComeFromMaintenanceRequest){
+        return this.maintenanceService.carComeFromMaintenance(theCarComeFromMaintenanceRequest);
     }
 }

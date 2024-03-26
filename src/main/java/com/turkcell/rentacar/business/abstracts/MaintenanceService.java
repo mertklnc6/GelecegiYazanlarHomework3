@@ -1,6 +1,7 @@
 package com.turkcell.rentacar.business.abstracts;
 
 import com.turkcell.rentacar.business.dtos.requests.maintenance.CreateMaintenanceRequest;
+import com.turkcell.rentacar.business.dtos.requests.maintenance.TheCarComeFromMaintenanceRequest;
 import com.turkcell.rentacar.business.dtos.requests.maintenance.UpdateMaintenanceRequest;
 import com.turkcell.rentacar.business.dtos.responses.maintenance.*;
 
@@ -12,4 +13,5 @@ public interface MaintenanceService {
     UpdatedMaintenanceResponse update(UpdateMaintenanceRequest updateMaintenanceRequest);
     GetByIdMaintenanceResponse getById(int id);
     DeletedMaintenanceResponse delete(int id);
+    TheCarComeFromMaintenanceResponse carComeFromMaintenance(TheCarComeFromMaintenanceRequest theCarComeFromMaintenanceRequest);
 }

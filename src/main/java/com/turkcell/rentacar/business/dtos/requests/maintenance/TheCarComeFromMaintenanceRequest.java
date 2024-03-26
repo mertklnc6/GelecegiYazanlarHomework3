@@ -1,18 +1,16 @@
 package com.turkcell.rentacar.business.dtos.requests.maintenance;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-public class UpdateMaintenanceRequest {
+public class TheCarComeFromMaintenanceRequest {
     private int id;
+    private LocalDateTime dateReturned;
     private int carId;
-    private LocalDateTime dateSent;
-    private LocalDateTime dataReturned;
 }

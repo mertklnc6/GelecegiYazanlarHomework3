@@ -6,10 +6,7 @@ import com.turkcell.rentacar.dataAccess.abstracts.MaintenanceRepository;
 import com.turkcell.rentacar.entities.concretes.Car;
 import com.turkcell.rentacar.entities.concretes.Maintenance;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -35,7 +32,5 @@ public class MaintenanceBusinessRules {
             throw new BusinessException("The maintenance does not exist");
         }
     }
-    public void isCarMaintenanceDone(int id){
-        //Burası araba bakımına göre doldurulacak.
-    }
+
 }

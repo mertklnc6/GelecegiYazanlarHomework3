@@ -2,6 +2,7 @@ package com.turkcell.rentacar.business.concretes;
 
 import com.turkcell.rentacar.business.abstracts.MaintenanceService;
 import com.turkcell.rentacar.business.dtos.requests.maintenance.CreateMaintenanceRequest;
+import com.turkcell.rentacar.business.dtos.requests.maintenance.TheCarComeFromMaintenanceRequest;
 import com.turkcell.rentacar.business.dtos.requests.maintenance.UpdateMaintenanceRequest;
 import com.turkcell.rentacar.business.dtos.responses.maintenance.*;
 import com.turkcell.rentacar.business.rules.CarBusinessRules;
@@ -11,7 +12,6 @@ import com.turkcell.rentacar.dataAccess.abstracts.MaintenanceRepository;
 import com.turkcell.rentacar.entities.concretes.Maintenance;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -55,14 +55,25 @@ public class MaintenanceManager implements MaintenanceService {
     @Override
     public UpdatedMaintenanceResponse update(UpdateMaintenanceRequest updateMaintenanceRequest) {
         this.maintenanceBusinessRules.isMaintenanceExistById(updateMaintenanceRequest.getId());
-        this.maintenanceBusinessRules.isCarMaintenanceDone(updateMaintenanceRequest.getId());  // Bu kısıma Caner Bakacak.
+        this.maintenanceBusinessRules.checkIfCarInRented(updateMaintenanceRequest.getCarId());
 
         Maintenance maintenance = this.modelMapperService.forRequest().
                 map(updateMaintenanceRequest, Maintenance.class);
-
+        maintenance.setDateReturned(updateMaintenanceRequest.getDataReturned());
 
         Maintenance updatedMaintenance = this.maintenanceRepository.save(maintenance);
         return this.modelMapperService.forResponse().map(updatedMaintenance, UpdatedMaintenanceResponse.class);
+    }
+    public TheCarComeFromMaintenanceResponse carComeFromMaintenance(TheCarComeFromMaintenanceRequest theCarComeFromMaintenanceRequest){
+        this.carBusinessRules.isCarExistById(theCarComeFromMaintenanceRequest.getCarId());
+        this.maintenanceBusinessRules.isMaintenanceExistById(theCarComeFromMaintenanceRequest.getId());
+
+        Optional<Maintenance> maintenance = this.maintenanceRepository.findById(theCarComeFromMaintenanceRequest.getId());
+        maintenance.get().setDateReturned(theCarComeFromMaintenanceRequest.getDateReturned());
+        TheCarComeFromMaintenanceResponse theCarComeFromMaintenanceResponse =
+                this.modelMapperService.forResponse().map(maintenance, TheCarComeFromMaintenanceResponse.class);
+
+        return theCarComeFromMaintenanceResponse;
     }
     @Override
     public DeletedMaintenanceResponse delete(int id) {

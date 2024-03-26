@@ -3,10 +3,9 @@ package com.turkcell.rentacar.api.controllers;
 import com.turkcell.rentacar.business.abstracts.CorporateCustomerService;
 import com.turkcell.rentacar.business.dtos.requests.customer.CreateCorporateCustomerRequest;
 import com.turkcell.rentacar.business.dtos.requests.customer.CreateIndividualCustomerRequest;
-import com.turkcell.rentacar.business.dtos.responses.customer.CreatedCorporateCustomerResponse;
-import com.turkcell.rentacar.business.dtos.responses.customer.CreatedIndividualCustomerResponse;
-import com.turkcell.rentacar.business.dtos.responses.customer.GotCorporateCustomerResponse;
-import com.turkcell.rentacar.business.dtos.responses.customer.GotIndividualCustomerResponse;
+import com.turkcell.rentacar.business.dtos.requests.customer.DeleteCorporateCustomerRequest;
+import com.turkcell.rentacar.business.dtos.requests.customer.UpdateCorporateCustomerRequest;
+import com.turkcell.rentacar.business.dtos.responses.customer.*;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -29,5 +28,14 @@ public class CorporateCustomerController {
     public List<GotCorporateCustomerResponse> getAll(){
         return this.corporateCustomerService.getAll();
     }
-
+    @PostMapping("/update")
+    @ResponseStatus(HttpStatus.OK)
+    public UpdatedCorporateCustomerResponse update(@RequestBody UpdateCorporateCustomerRequest updateCorporateCustomerRequest){
+        return this.corporateCustomerService.update(updateCorporateCustomerRequest);
+    }
+    @DeleteMapping("/delete")
+    @ResponseStatus(HttpStatus.OK)
+    public DeletedCorporateCustomerResponse delete(@RequestBody DeleteCorporateCustomerRequest deleteCorporateCustomerRequest){
+        return this.corporateCustomerService.delete(deleteCorporateCustomerRequest);
+    }
 }
