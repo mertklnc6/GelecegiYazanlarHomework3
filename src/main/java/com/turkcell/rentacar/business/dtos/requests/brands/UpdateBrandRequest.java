@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @Data
 public class UpdateBrandRequest {
     private int id;
-
     @NotNull
     @Size(min=2, max=30)
     private String name;

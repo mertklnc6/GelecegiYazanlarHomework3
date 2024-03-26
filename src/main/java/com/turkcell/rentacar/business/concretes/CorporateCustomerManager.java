@@ -37,13 +37,15 @@ public class CorporateCustomerManager implements CorporateCustomerService {
     public List<GotCorporateCustomerResponse> getAll() {
         List<CorporateCustomer> corporateCustomerList = this.corporateCustomerRepository.findAll();
         return corporateCustomerList.stream().map(corporateCustomer ->
-                this.modelMapperService.forResponse().map(corporateCustomer, GotCorporateCustomerResponse.class)).collect(Collectors.toList());
+                this.modelMapperService.forResponse().
+                        map(corporateCustomer, GotCorporateCustomerResponse.class)).collect(Collectors.toList());
     }
 
     @Override
     public DeletedCorporateCustomerResponse delete(DeleteCorporateCustomerRequest deleteCorporateCustomerRequest) {
         this.corporateCustomerBusinessRules.isCorporateCustomerExistById(deleteCorporateCustomerRequest.getCustomerId());
-        Optional<CorporateCustomer> corporateCustomer = this.corporateCustomerRepository.findById(deleteCorporateCustomerRequest.getCustomerId());
+        Optional<CorporateCustomer> corporateCustomer = this.corporateCustomerRepository.
+                findById(deleteCorporateCustomerRequest.getCustomerId());
         corporateCustomer.get().setDeletedDate(LocalDateTime.now());
 
         DeletedCorporateCustomerResponse deletedCorporateCustomerResponse =

@@ -1,7 +1,5 @@
-package com.turkcell.rentacar.business.dtos.requests.rental;
+package com.turkcell.rentacar.business.dtos.responses.rental;
 
-import com.turkcell.rentacar.entities.concretes.Car;
-import com.turkcell.rentacar.entities.concretes.Customer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,9 +9,12 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class CreateRentalRequest {
+public class GetAllRentalResponse {
+    private int id;
+    private int totalPrice;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private int customerId;
-    private int carId;
+    private String carName;
 }
+

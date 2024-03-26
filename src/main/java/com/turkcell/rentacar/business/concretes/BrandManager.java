@@ -66,11 +66,8 @@ public class BrandManager implements BrandService {
     @Override
     public DeletedBrandResponse delete(int id) {
         this.brandBusinessRules.isBrandExistById(id);
-
         Brand brand = this.brandRepository.findById(id).orElse(null);
-        assert brand != null;
         brand.setDeletedDate(LocalDateTime.now());
-
         return this.modelMapperService.forResponse().map(brand,DeletedBrandResponse.class);
     }
 }

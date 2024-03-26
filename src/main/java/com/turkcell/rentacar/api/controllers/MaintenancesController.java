@@ -40,7 +40,7 @@ public class MaintenancesController {
     public DeletedMaintenanceResponse delete(@PathVariable int id){
         return this.maintenanceService.delete(id);
     }
-    @PostMapping("/theCarComeFromMaintenance")
+    @PostMapping("/theCarComeFromMaintenance") //Api Bu sekilde olmali mi?
     @ResponseStatus(HttpStatus.OK)
     public TheCarComeFromMaintenanceResponse theCarComeFromMaintenance(@RequestBody TheCarComeFromMaintenanceRequest theCarComeFromMaintenanceRequest){
         return this.maintenanceService.carComeFromMaintenance(theCarComeFromMaintenanceRequest);
