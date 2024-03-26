@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Data
 public class UpdateMaintenanceRequest {
-
     private int id;
-
+    private LocalDateTime dateSent;
 }

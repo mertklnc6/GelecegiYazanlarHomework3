@@ -19,5 +19,4 @@ public class CreateModelRequest {
     private int brandId;
     private int fuelId;
     private int transmissionId;
-
 }
