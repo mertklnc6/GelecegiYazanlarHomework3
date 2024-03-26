@@ -33,7 +33,7 @@ public class FuelManager implements FuelService {
     @Override
     public GetByIdFuelResponse getById(int id) {
         Fuel fuel = this.fuelRepository.findById(id).orElse(null);
-        this.fuelBusinessRules.FuelCanNotBeEmpty(fuel.getId());
+        this.fuelBusinessRules.isFuelExistById(fuel.getId());
         return this.modelMapperService.forResponse().map(fuel,GetByIdFuelResponse.class);
     }
 
@@ -46,7 +46,7 @@ public class FuelManager implements FuelService {
 
     @Override
     public UpdatedFuelResponse update(UpdateFuelRequest updateFuelRequest) {
-        this.fuelBusinessRules.FuelCanNotBeEmpty(updateFuelRequest.getId());
+        this.fuelBusinessRules.isFuelExistByUpdateRequest(updateFuelRequest);
         Fuel fuel = this.modelMapperService.forRequest().map(updateFuelRequest,Fuel.class);
 
         fuel.setUpdatedDate(LocalDateTime.now());
@@ -56,6 +56,7 @@ public class FuelManager implements FuelService {
 
     @Override
     public DeletedFuelResponse delete(int id) {
+        this.fuelBusinessRules.isFuelExistById(id);
         Fuel fuel = this.fuelRepository.findById(id).orElse(null);
         //Todo Rule eklenecek.
         fuel.setDeletedDate(LocalDateTime.now());

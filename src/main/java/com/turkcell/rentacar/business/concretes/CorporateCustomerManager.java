@@ -23,7 +23,6 @@ import java.util.stream.Collectors;
 public class CorporateCustomerManager implements CorporateCustomerService {
     private CorporateCustomerRepository corporateCustomerRepository;
     private ModelMapperService modelMapperService;
-
     @Override
     public CreatedCorporateCustomerResponse add(CreateCorporateCustomerRequest createCorporateCustomerRequest) {
         CorporateCustomer corporateCustomer = this.modelMapperService.forRequest().map(createCorporateCustomerRequest,CorporateCustomer.class);
@@ -31,7 +30,6 @@ public class CorporateCustomerManager implements CorporateCustomerService {
         CorporateCustomer saveCustomer = this.corporateCustomerRepository.save(corporateCustomer);
         return this.modelMapperService.forResponse().map(saveCustomer, CreatedCorporateCustomerResponse.class);
     }
-
     @Override
     public List<GotCorporateCustomerResponse> getAll() {
         List<CorporateCustomer> corporateCustomerList = this.corporateCustomerRepository.findAll();

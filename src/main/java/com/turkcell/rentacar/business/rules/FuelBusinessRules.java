@@ -1,9 +1,24 @@
 package com.turkcell.rentacar.business.rules;
 
+import com.turkcell.rentacar.business.dtos.requests.fuels.UpdateFuelRequest;
+import com.turkcell.rentacar.core.utilities.exceptions.types.BusinessException;
+import com.turkcell.rentacar.dataAccess.abstracts.FuelRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class FuelBusinessRules {
-    public void FuelCanNotBeEmpty(int id){
+    private FuelRepository fuelRepository;
+
+    public void isFuelExistByUpdateRequest(UpdateFuelRequest updateFuelRequest){
+        if (this.fuelRepository.findById(updateFuelRequest.getId()).isEmpty()){
+            throw new BusinessException("Fuel Does not Exist");
+        }
+    }
+    public void isFuelExistById (int id){
+        if(this.fuelRepository.findById(id).isEmpty()){
+            throw new BusinessException("Fuel Does not Exist");
+        }
     }
 }

@@ -3,11 +3,10 @@ package com.turkcell.rentacar.business.concretes;
 import com.turkcell.rentacar.business.abstracts.CarService;
 import com.turkcell.rentacar.business.dtos.requests.cars.CreateCarRequest;
 import com.turkcell.rentacar.business.dtos.requests.cars.UpdateCarRequest;
-import com.turkcell.rentacar.business.dtos.responses.cars.CreatedCarResponse;
-import com.turkcell.rentacar.business.dtos.responses.cars.DeletedCarResponse;
-import com.turkcell.rentacar.business.dtos.responses.cars.GotCarResponse;
-import com.turkcell.rentacar.business.dtos.responses.cars.UpdatedCarResponse;
+import com.turkcell.rentacar.business.dtos.responses.cars.*;
 
+import com.turkcell.rentacar.business.rules.CarBusinessRules;
+import com.turkcell.rentacar.business.rules.ModelBusinessRules;
 import com.turkcell.rentacar.core.utilities.mapping.ModelMapperService;
 import com.turkcell.rentacar.dataAccess.abstracts.CarRepository;
 import com.turkcell.rentacar.entities.concretes.Car;
@@ -21,46 +20,47 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Service
 public class CarManager implements CarService {
-
     private CarRepository carRepository;
     private ModelMapperService modelMapperService;
-
+    private CarBusinessRules carBusinessRules;
+    private ModelBusinessRules modelBusinessRules;
     @Override
     public CreatedCarResponse add(CreateCarRequest createCarRequest) {
         Car car = this.modelMapperService.forRequest().map(createCarRequest,Car.class);
+        this.carBusinessRules.isCarExistById(car.getId());
+        this.modelBusinessRules.isModelExistById(createCarRequest.getModelId());
+
         car.setCreatedDate(LocalDateTime.now());
         Car createdCar = this.carRepository.save(car);
         return this.modelMapperService.forResponse().map(createdCar,CreatedCarResponse.class);
     }
-
     @Override
-    public GotCarResponse getById(int id) {
+    public GetByIdCarResponse getById(int id) {
         Car car = this.carRepository.findById(id).orElse(null);
-        return this.modelMapperService.forResponse().map(car, GotCarResponse.class);
+        this.carBusinessRules.isCarExistById(id);
+        return this.modelMapperService.forResponse().map(car, GetByIdCarResponse.class);
     }
-
     @Override
-    public List<GotCarResponse> getAll() {
+    public List<GetAllCarResponse> getAll() {
         List<Car> cars = this.carRepository.findAll();
-        return cars.stream().map(car -> this.modelMapperService.forResponse().map(car,GotCarResponse.class)).collect(Collectors.toList());
+        return cars.stream().map(car -> this.modelMapperService.forResponse().
+                map(car, GetAllCarResponse.class)).collect(Collectors.toList());
     }
-
     @Override
     public UpdatedCarResponse update(UpdateCarRequest updateCarRequest) {
-
         Car car = this.modelMapperService.forRequest().map(updateCarRequest,Car.class);
+        this.carBusinessRules.isCarExistById(updateCarRequest.getId());
+
         car.setUpdatedDate(LocalDateTime.now());
-        carRepository.save(car);
+        this.carRepository.save(car);
         return this.modelMapperService.forResponse().map(car,UpdatedCarResponse.class);
     }
-
     @Override
     public DeletedCarResponse delete(int id) {
         Car car = this.carRepository.findById(id).orElse(null);
+        this.carBusinessRules.isCarExistById(id);
+
         car.setDeletedDate(LocalDateTime.now());
         return this.modelMapperService.forResponse().map(car,DeletedCarResponse.class);
-
     }
-
-
 }

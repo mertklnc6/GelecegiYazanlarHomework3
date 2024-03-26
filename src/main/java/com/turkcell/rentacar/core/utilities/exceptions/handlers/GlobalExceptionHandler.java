@@ -26,9 +26,11 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ValidationProblemDetails handleValidationException(MethodArgumentNotValidException exception) {
         Map<String,String> validationErrors = new HashMap<>();
+
         exception.getBindingResult().getFieldErrors().stream().map(error ->
                 validationErrors.put(error.getField(),error.getDefaultMessage())
         ).toList();
+
         ValidationProblemDetails validationProblemDetails = new ValidationProblemDetails();
         validationProblemDetails.setErrors(validationErrors);
         return validationProblemDetails;

@@ -17,19 +17,25 @@ import java.util.Optional;
 public class MaintenanceBusinessRules {
     private final MaintenanceRepository maintenanceRepository;
     private CarRepository carRepository;
-    public void checkIfCarInMaintenance(int carId){
+    public void checkIfCarInMaintenance(int carId) {
         Car car = this.carRepository.findById(carId).orElse(null);
-        assert car != null;
-        if (!(car.getState() == Car.State.Available )){
-            throw new BusinessException("the car is already in maintenance");
+        if ((car.getState() == Car.State.Under_Maintenance)) {
+            throw new BusinessException("The car is already in maintenance");
         }
     }
-
-    public void checkIfMaintenanceExist(int maintenanceId){
-        Optional<Maintenance> maintenance = maintenanceRepository.findById(maintenanceId);
-
-        if(!maintenance.isPresent()){
+    public void checkIfCarInRented(int carId){
+        Car car = this.carRepository.findById(carId).orElse(null);
+        if (car.getState() == Car.State.Rented) {
+            throw new BusinessException("The car is rented");
+        }
+    }
+    public void isMaintenanceExistById(int id){
+        Optional<Maintenance> maintenance = maintenanceRepository.findById(id);
+        if(maintenance.isEmpty()){
             throw new BusinessException("The maintenance does not exist");
         }
+    }
+    public void isCarMaintenanceDone(int id){
+        //Burası araba bakımına göre doldurulacak.
     }
 }

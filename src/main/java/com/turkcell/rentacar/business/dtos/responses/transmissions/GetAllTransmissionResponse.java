@@ -7,9 +7,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class GotTransmissionResponse {
+public class GetAllTransmissionResponse {
     private int id;
     private String name;
-    
-    
 }
