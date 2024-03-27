@@ -1,5 +1,7 @@
 package com.turkcell.rentacar.adapter;
 
+import com.turkcell.rentacar.adapter.result.FindexResult;
+
 public interface FindexService {
-    int getFindexScoreofCustomer(int customerId);
+    FindexResult getFindexScoreofCustomer(int customerId);
 }

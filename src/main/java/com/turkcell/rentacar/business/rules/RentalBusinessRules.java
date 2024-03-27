@@ -1,7 +1,7 @@
 package com.turkcell.rentacar.business.rules;
 
 import com.turkcell.rentacar.adapter.FindexService;
-import com.turkcell.rentacar.adapter.FindexServiceAdapter;
+import com.turkcell.rentacar.adapter.result.FindexResult;
 import com.turkcell.rentacar.core.utilities.exceptions.types.BusinessException;
 import com.turkcell.rentacar.dataAccess.abstracts.CarRepository;
 import com.turkcell.rentacar.dataAccess.abstracts.RentalRepository;
@@ -42,9 +42,9 @@ public class RentalBusinessRules {
         }
     }
     public void compareCarAndCustomerFindexScore(Rental rental){
-        int customerFindexScore = this.findexService.getFindexScoreofCustomer(rental.getCustomer().getId());
+        FindexResult findexResult = this.findexService.getFindexScoreofCustomer(rental.getCustomer().getId());
         Car car = this.carRepository.findById(rental.getCar().getId()).orElse(null);
-        if (customerFindexScore <= car.getFindexScore()){
+        if (findexResult.getFindexScore() <= car.getFindexScore()){
             throw new BusinessException("Customer findex score is not enough.");
         }
     }
