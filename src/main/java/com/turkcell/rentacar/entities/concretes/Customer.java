@@ -1,9 +1,11 @@
 package com.turkcell.rentacar.entities.concretes;
+
 import com.turkcell.rentacar.core.entities.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import java.util.List;
 
 @NoArgsConstructor
@@ -16,7 +18,7 @@ public class Customer extends BaseEntity {
     @Column(name = "email")
     private String eMail;
 
-    @Column(name="phone_number")
+    @Column(name = "phone_number")
     private String phoneNumber;
 
     @OneToMany(mappedBy = "customer")
@@ -29,4 +31,7 @@ public class Customer extends BaseEntity {
     @OneToOne
     @JoinColumn(name = "individual_id", referencedColumnName = "id")
     private IndividualCustomer individualCustomer;
+
+    @OneToMany(mappedBy = "customer")
+    List<Payment> payments;
 }
