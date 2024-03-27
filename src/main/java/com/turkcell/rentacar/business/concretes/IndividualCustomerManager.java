@@ -27,23 +27,19 @@ public class IndividualCustomerManager implements IndividualCustomerService {
     public CreatedIndividualCustomerResponse add(CreateIndividualCustomerRequest createIndividualCustomerRequest) {
         IndividualCustomer individualCustomer = this.modelMapperService.forRequest().map(createIndividualCustomerRequest,IndividualCustomer.class);
         individualCustomer.setCreatedDate(LocalDateTime.now());
-        IndividualCustomer saveCustomer = this.individualCustomerRepository.save(individualCustomer);
-        return this.modelMapperService.forResponse().map(saveCustomer, CreatedIndividualCustomerResponse.class);
-
+        return this.modelMapperService.forResponse().
+                map(this.individualCustomerRepository.save(individualCustomer), CreatedIndividualCustomerResponse.class);
     }
     @Override
     public List<GetAllIndividualCustomerResponse> getAll() {
-        List<IndividualCustomer> individualCustomerList = this.individualCustomerRepository.findAll();
-        return individualCustomerList.stream().map(individualCustomer ->
+        return  this.individualCustomerRepository.findAll().stream().map(individualCustomer ->
                 this.modelMapperService.forResponse().map(individualCustomer, GetAllIndividualCustomerResponse.class)).collect(Collectors.toList());
     }
     @Override
     public GetByIdIndividualCustomerResponse getById(int id) {
         this.individualCustomerBusinessRules.isIndividualCustomerExistById(id);
-        Optional<IndividualCustomer> individualCustomer = this.individualCustomerRepository.findById(id);
-        GetByIdIndividualCustomerResponse getByIdIndividualCustomerResponse =
-                this.modelMapperService.forResponse().map(individualCustomer,GetByIdIndividualCustomerResponse.class);
-        return getByIdIndividualCustomerResponse;
+        return this.modelMapperService.forResponse().
+                map(this.individualCustomerRepository.findById(id),GetByIdIndividualCustomerResponse.class);
     }
     @Override
     public UpdatedIndividualCustomerResponse update(UpdateIndividualCustomerRequest updateIndividualCustomerRequest) {
@@ -52,9 +48,8 @@ public class IndividualCustomerManager implements IndividualCustomerService {
                 this.modelMapperService.forRequest().map(updateIndividualCustomerRequest,IndividualCustomer.class);
         individualCustomer.setUpdatedDate(LocalDateTime.now());
 
-        UpdatedIndividualCustomerResponse updatedIndividualCustomerResponse
-                = this.modelMapperService.forResponse().map(individualCustomer, UpdatedIndividualCustomerResponse.class);
-        return updatedIndividualCustomerResponse;
+        return this.modelMapperService.forResponse().
+                map(this.individualCustomerRepository.save(individualCustomer), UpdatedIndividualCustomerResponse.class);
     }
     @Override
     public DeletedIndividualCustomerResponse delete(int id) {
@@ -62,9 +57,6 @@ public class IndividualCustomerManager implements IndividualCustomerService {
         Optional<IndividualCustomer>  individualCustomer = this.individualCustomerRepository.findById(id);
         individualCustomer.get().setDeletedDate(LocalDateTime.now());
 
-        DeletedIndividualCustomerResponse deletedIndividualCustomerResponse =
-                this.modelMapperService.forResponse().map(individualCustomer,DeletedIndividualCustomerResponse.class);
-
-        return deletedIndividualCustomerResponse;
+        return this.modelMapperService.forResponse().map(individualCustomer,DeletedIndividualCustomerResponse.class);
     }
 }

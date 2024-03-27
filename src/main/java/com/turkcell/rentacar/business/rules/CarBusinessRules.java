@@ -19,4 +19,12 @@ public class CarBusinessRules {
             throw new BusinessException("Car Does not Exist");
         }
     }
+    public Car.State setCarStatefromIntegertoEnum(int stateId){
+        for (Car.State state: Car.State.values()){
+            if (state.getValue() == stateId){
+                return state;
+            }
+        }
+        throw new BusinessException("Invalid State Value");
+    }
 }

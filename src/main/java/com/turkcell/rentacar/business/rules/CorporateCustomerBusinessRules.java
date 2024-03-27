@@ -16,7 +16,7 @@ public class CorporateCustomerBusinessRules {
     public void isCorporateCustomerExistById(int id){
         Optional<CorporateCustomer> corporateCustomer = this.corporateCustomerRepository.findById(id);
         if(!corporateCustomer.isPresent()){
-            throw new BusinessException("CorporateCustomer not exist");
+            throw new BusinessException("CorporateCustomer Does not exist");
         }
     }
 }

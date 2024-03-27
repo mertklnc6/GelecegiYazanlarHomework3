@@ -19,19 +19,17 @@ import java.util.List;
 @RequestMapping("api/v1/individuals")
 public class IndividualsCustomerController {
     private IndividualCustomerService individualCustomerService;
-
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public CreatedIndividualCustomerResponse add(@RequestBody CreateIndividualCustomerRequest createIndividualCustomerRequest) {
         return this.individualCustomerService.add(createIndividualCustomerRequest);
-
     }
     @GetMapping("/getAll")
     @ResponseStatus(HttpStatus.OK)
     public List<GetAllIndividualCustomerResponse> getAll(){
         return this.individualCustomerService.getAll();
     }
-    @PostMapping("/update")
+    @PutMapping("/update")
     @ResponseStatus(HttpStatus.OK)
     public UpdatedIndividualCustomerResponse update(@RequestBody @Valid UpdateIndividualCustomerRequest updateIndividualCustomerRequest){
         return this.individualCustomerService.update(updateIndividualCustomerRequest);

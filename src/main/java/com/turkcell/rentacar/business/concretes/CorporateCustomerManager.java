@@ -35,12 +35,10 @@ public class CorporateCustomerManager implements CorporateCustomerService {
     }
     @Override
     public List<GotCorporateCustomerResponse> getAll() {
-        List<CorporateCustomer> corporateCustomerList = this.corporateCustomerRepository.findAll();
-        return corporateCustomerList.stream().map(corporateCustomer ->
+        return this.corporateCustomerRepository.findAll().stream().map(corporateCustomer ->
                 this.modelMapperService.forResponse().
                         map(corporateCustomer, GotCorporateCustomerResponse.class)).collect(Collectors.toList());
     }
-
     @Override
     public DeletedCorporateCustomerResponse delete(DeleteCorporateCustomerRequest deleteCorporateCustomerRequest) {
         this.corporateCustomerBusinessRules.isCorporateCustomerExistById(deleteCorporateCustomerRequest.getCustomerId());
@@ -48,19 +46,16 @@ public class CorporateCustomerManager implements CorporateCustomerService {
                 findById(deleteCorporateCustomerRequest.getCustomerId());
         corporateCustomer.get().setDeletedDate(LocalDateTime.now());
 
-        DeletedCorporateCustomerResponse deletedCorporateCustomerResponse =
-                this.modelMapperService.forResponse().map(corporateCustomer, DeletedCorporateCustomerResponse.class);
-        return deletedCorporateCustomerResponse;
+        return this.modelMapperService.forResponse().map(corporateCustomer, DeletedCorporateCustomerResponse.class);
     }
     public UpdatedCorporateCustomerResponse update(UpdateCorporateCustomerRequest updateCorporateCustomerRequest){
         this.corporateCustomerBusinessRules.isCorporateCustomerExistById(updateCorporateCustomerRequest.getId());
-        CorporateCustomer updatedCorporateCustomer =
+        CorporateCustomer corporateCustomer =
                 this.modelMapperService.forRequest().map(updateCorporateCustomerRequest,CorporateCustomer.class);
-        updatedCorporateCustomer.setUpdatedDate(LocalDateTime.now());
+        corporateCustomer.setUpdatedDate(LocalDateTime.now());
 
-        UpdatedCorporateCustomerResponse updatedCorporateCustomerResponse =
-                this.modelMapperService.forResponse().map(updatedCorporateCustomer, UpdatedCorporateCustomerResponse.class);
-        return updatedCorporateCustomerResponse;
+        return this.modelMapperService.forResponse().
+                map(this.corporateCustomerRepository.save(corporateCustomer), UpdatedCorporateCustomerResponse.class);
     }
 
 }

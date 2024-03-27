@@ -14,5 +14,5 @@ public class GetByIdRentalResponse {
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private int customerId;
-    private String carName;
+    private int carId;
 }

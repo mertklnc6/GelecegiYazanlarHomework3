@@ -60,4 +60,9 @@ public class RentalBusinessRules {
             throw new BusinessException("Rental is null");
         }
    }
+   public void checkDatesAreCorrect(Rental rental){
+        if (calculateTotalPriceofRental(rental) < 0){
+            throw new BusinessException("Start Date must be before the End Date");
+        }
+   }
 }

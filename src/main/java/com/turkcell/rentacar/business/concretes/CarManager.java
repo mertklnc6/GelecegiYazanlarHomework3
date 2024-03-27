@@ -26,13 +26,12 @@ public class CarManager implements CarService {
     private ModelBusinessRules modelBusinessRules;
     @Override
     public CreatedCarResponse add(CreateCarRequest createCarRequest) {
-        Car car = this.modelMapperService.forRequest().map(createCarRequest,Car.class);
-        this.carBusinessRules.isCarExistById(car.getId());
         this.modelBusinessRules.isModelExistById(createCarRequest.getModelId());
+        Car car = this.modelMapperService.forRequest().map(createCarRequest,Car.class);
 
+        car.setState(this.carBusinessRules.setCarStatefromIntegertoEnum(createCarRequest.getState()));
         car.setCreatedDate(LocalDateTime.now());
-        Car createdCar = this.carRepository.save(car);
-        return this.modelMapperService.forResponse().map(createdCar,CreatedCarResponse.class);
+        return this.modelMapperService.forResponse().map(this.carRepository.save(car),CreatedCarResponse.class);
     }
     @Override
     public GetByIdCarResponse getById(int id) {

@@ -21,14 +21,13 @@ public class CorporateCustomerController {
     @ResponseStatus(HttpStatus.CREATED)
     public CreatedCorporateCustomerResponse add(@RequestBody CreateCorporateCustomerRequest createCorporateCustomerRequest) {
         return this.corporateCustomerService.add(createCorporateCustomerRequest);
-
     }
     @GetMapping("/getAll")
     @ResponseStatus(HttpStatus.OK)
     public List<GotCorporateCustomerResponse> getAll(){
         return this.corporateCustomerService.getAll();
     }
-    @PostMapping("/update")
+    @PutMapping("/update")
     @ResponseStatus(HttpStatus.OK)
     public UpdatedCorporateCustomerResponse update(@RequestBody UpdateCorporateCustomerRequest updateCorporateCustomerRequest){
         return this.corporateCustomerService.update(updateCorporateCustomerRequest);

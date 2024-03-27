@@ -16,7 +16,7 @@ public class IndividualCustomerBusinessRules {
     public void isIndividualCustomerExistById(int id){
        Optional<IndividualCustomer>  individualCustomer = this.individualCustomerRepository.findById(id);
        if (!individualCustomer.isPresent()){
-           throw new BusinessException("Individual customer not exist");
+           throw new BusinessException("Individual customer Does not exist");
        }
     }
 }

@@ -34,8 +34,6 @@ public class ModelManager implements ModelService {
         this.transmissionBusinessRules.isTransmissionExistById(createModelRequest.getTransmissionId());
 
         Model model = this.modelMapperService.forRequest().map(createModelRequest, Model.class);
-        this.modelBusinessRules.isModelExistById(model.getId());
-
         model.setCreatedDate(LocalDateTime.now());
         Model createdModel = this.modelRepository.save(model);
         return this.modelMapperService.forResponse().map(createdModel, CreatedModelResponse.class);

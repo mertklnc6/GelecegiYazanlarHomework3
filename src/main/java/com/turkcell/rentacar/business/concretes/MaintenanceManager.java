@@ -37,7 +37,6 @@ public class MaintenanceManager implements MaintenanceService {
         this.maintenanceRepository.save(maintenance);
         return this.modelMapperService.forResponse().map(maintenance, CreatedMaintenanceResponse.class);
     }
-
     @Override
     public List<GetAllMaintenanceResponse>  getAll() {
         List<Maintenance> maintenanceList = this.maintenanceRepository.findAll();
@@ -45,7 +44,6 @@ public class MaintenanceManager implements MaintenanceService {
         return maintenanceList.stream().map(maintenance -> this.modelMapperService.forResponse().
                 map(maintenance, GetAllMaintenanceResponse.class)).collect(Collectors.toList());
     }
-
     @Override
     public GetByIdMaintenanceResponse getById(int id) {
         Maintenance maintenance = this.maintenanceRepository.findById(id).orElse(null);
@@ -70,10 +68,8 @@ public class MaintenanceManager implements MaintenanceService {
 
         Optional<Maintenance> maintenance = this.maintenanceRepository.findById(theCarComeFromMaintenanceRequest.getId());
         maintenance.get().setDateReturned(theCarComeFromMaintenanceRequest.getDateReturned());
-        TheCarComeFromMaintenanceResponse theCarComeFromMaintenanceResponse =
-                this.modelMapperService.forResponse().map(maintenance, TheCarComeFromMaintenanceResponse.class);
 
-        return theCarComeFromMaintenanceResponse;
+        return this.modelMapperService.forResponse().map(maintenance, TheCarComeFromMaintenanceResponse.class);
     }
     @Override
     public DeletedMaintenanceResponse delete(int id) {
