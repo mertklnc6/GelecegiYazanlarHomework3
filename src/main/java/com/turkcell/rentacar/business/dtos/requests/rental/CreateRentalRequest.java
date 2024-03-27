@@ -12,10 +12,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Data
 public class CreateRentalRequest {
-
     private LocalDateTime startDate;
     private LocalDateTime endDate;
-
     private int customerId;
     private int carId;
 }

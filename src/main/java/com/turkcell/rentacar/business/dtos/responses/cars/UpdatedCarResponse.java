@@ -11,15 +11,10 @@ import java.time.LocalDateTime;
 @Data
 public class UpdatedCarResponse {
     private int id;
-
-    private String name;
-
+    private String modelName;
     private String brandName;
     private int dailyPrice;
-
     private String fuelName;
-
     private String transmissionName;
-
     private LocalDateTime updatedDate;
 }

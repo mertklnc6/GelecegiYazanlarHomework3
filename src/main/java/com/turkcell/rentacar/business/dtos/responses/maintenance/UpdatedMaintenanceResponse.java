@@ -11,11 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Data
 public class UpdatedMaintenanceResponse {
-
     private int id;
-
     private LocalDateTime dateReturned;
-
     private String carName;
-
 }

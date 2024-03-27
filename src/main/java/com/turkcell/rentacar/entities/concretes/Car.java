@@ -4,6 +4,7 @@ import com.turkcell.rentacar.core.entities.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
@@ -39,6 +40,7 @@ public class Car extends BaseEntity {
     @OneToMany(mappedBy = "car")
     private List<Rental> rentals;
 
+    @Getter
     public enum State {
         Available(1),
         Rented(2),
@@ -49,8 +51,5 @@ public class Car extends BaseEntity {
             this.value = value;
         }
 
-        public int getValue() {
-            return value;
-        }
     }
 }

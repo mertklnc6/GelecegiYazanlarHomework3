@@ -36,7 +36,7 @@ public class BrandManager implements BrandService {
 
     @Override
     public GetByIdBrandResponse getById(int id) {
-        this.brandBusinessRules.brandIdCanNotFound(id);
+        this.brandBusinessRules.isBrandExistById(id);
         Brand brand = this.brandRepository.findById(id).orElse(null);
 
         return this.modelMapperService.forResponse().map(brand, GetByIdBrandResponse.class);
@@ -53,7 +53,7 @@ public class BrandManager implements BrandService {
 
     @Override
     public UpdatedBrandResponse update(UpdateBrandRequest updateBrandRequest) {
-        this.brandBusinessRules.brandIdCanNotFound(updateBrandRequest.getId());
+        this.brandBusinessRules.isBrandExistById(updateBrandRequest.getId());
         this.brandBusinessRules.brandNameCanNotBeDuplicated(updateBrandRequest.getName());
 
         Brand brand = this.modelMapperService.forRequest().map(updateBrandRequest,Brand.class);
@@ -65,12 +65,9 @@ public class BrandManager implements BrandService {
 
     @Override
     public DeletedBrandResponse delete(int id) {
-        this.brandBusinessRules.brandIdCanNotFound(id);
-
+        this.brandBusinessRules.isBrandExistById(id);
         Brand brand = this.brandRepository.findById(id).orElse(null);
-        assert brand != null;
         brand.setDeletedDate(LocalDateTime.now());
-
         return this.modelMapperService.forResponse().map(brand,DeletedBrandResponse.class);
     }
 }

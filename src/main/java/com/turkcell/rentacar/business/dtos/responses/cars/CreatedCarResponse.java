@@ -18,7 +18,8 @@ public class CreatedCarResponse {
     private int findexScore;
     private int modelYear;
     private String plate;
-    private int state;
+    private String modelName;
+    private Car.State state;
     private int dailyPrice;
     private String brandName;
     private String fuelName;

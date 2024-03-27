@@ -10,11 +10,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreatedMaintenanceResponse {
-
     private int id;
-
     private LocalDateTime dateSent;
-
     private String carName;
-
 }

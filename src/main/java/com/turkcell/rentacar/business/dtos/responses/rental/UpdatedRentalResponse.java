@@ -9,14 +9,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class GotRentalResponse {
+public class UpdatedRentalResponse {
     private int id;
     private int totalPrice;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
-
     private int customerId;
-
     private String carName;
 }
-

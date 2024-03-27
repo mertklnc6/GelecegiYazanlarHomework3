@@ -13,4 +13,5 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class CreateMaintenanceRequest {
     private int carId;
+    private LocalDateTime dateSent;
 }

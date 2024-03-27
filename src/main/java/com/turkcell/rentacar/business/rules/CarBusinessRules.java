@@ -13,12 +13,18 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class CarBusinessRules {
-
     private CarRepository carRepository;
-
-    public void checkCarIdExist(int id){
-        if(!this.carRepository.existsById(id)){
-            throw new BusinessException("CarNotExists");
+    public void isCarExistById(int id){
+        if(this.carRepository.findById(id).isEmpty()){
+            throw new BusinessException("Car Does not Exist");
         }
+    }
+    public Car.State setCarStatefromIntegertoEnum(int stateId){
+        for (Car.State state: Car.State.values()){
+            if (state.getValue() == stateId){
+                return state;
+            }
+        }
+        throw new BusinessException("Invalid State Value");
     }
 }

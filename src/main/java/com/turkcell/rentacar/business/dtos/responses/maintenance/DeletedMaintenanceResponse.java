@@ -10,8 +10,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Data
 public class DeletedMaintenanceResponse {
-
     private int id;
-
     private LocalDateTime deletedDate;
 }
