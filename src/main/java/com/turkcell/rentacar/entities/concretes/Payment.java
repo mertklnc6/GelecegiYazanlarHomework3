@@ -18,24 +18,17 @@ import java.time.LocalDateTime;
 
 public class Payment extends BaseEntity {
 
-    @Column(name = "card_number")
-    private String cardNumber;
-    @Column(name = "cardholder")
-    private String cardholder;
-    @Column(name = "card_expiration_year")
-    private int cardExpirationYear;
-    @Column(name = "card_expiration_month")
-    private int cardExpirationMonth;
-    @Column(name = "card_cvv")
-    private String cardCvv;
     @Column(name = "balance")
     private double balance;
-    @Column(name = "payment_date")
-    private LocalDateTime paymentDate;
 
+    @Column(name = "is_successful")
+    private boolean isSuccessful;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
+    @OneToOne
+    @JoinColumn(name = "rental_id")
+    private Rental rental;
 }

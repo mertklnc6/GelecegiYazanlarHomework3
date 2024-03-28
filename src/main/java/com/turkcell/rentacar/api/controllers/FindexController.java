@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class FindexController {
     @GetMapping("/findex/{customerId}")
     public int getFindexScore(@PathVariable int customerId){
-        return ((customerId * 365)/10);
+        return ((customerId * 3650));
     }
 }

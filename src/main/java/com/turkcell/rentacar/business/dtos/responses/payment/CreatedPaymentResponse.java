@@ -4,18 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 public class CreatedPaymentResponse {
-    private boolean isPaymentSuccess;
-
-    private int customerId;
-
-    private int paymentId;
-
-    private LocalDateTime paymentDate;
-
+    private boolean makePayment;
 }

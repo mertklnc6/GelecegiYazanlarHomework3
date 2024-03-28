@@ -33,6 +33,7 @@ public class RentalManager implements RentalService {
         this.rentalBusinessRules.compareCarAndCustomerFindexScore(rental);
 
         rental.setTotalPrice(rentalBusinessRules.calculateTotalPriceofRental(rental));
+        this.rentalBusinessRules.checkIfCustomerBalanceIsEnough(rental);
         return this.modelMapperService.forResponse().map(this.rentalRepository.save(rental), CreatedRentalResponse.class);
     }
     @Override

@@ -9,17 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class CreatePaymentRequest {
 
-    private String cardNumber;
-
-    private String cardholder;
-
-    private int cardExpirationYear;
-
-    private int cardExpirationMonth;
-
-    private String cardCvv;
-
     private double balance;
-
-
+    private int customerId;
+    private int rentalId;
 }
