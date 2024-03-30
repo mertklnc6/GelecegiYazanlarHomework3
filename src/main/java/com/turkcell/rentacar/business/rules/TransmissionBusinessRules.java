@@ -1,6 +1,7 @@
 package com.turkcell.rentacar.business.rules;
 
 import com.turkcell.rentacar.business.dtos.requests.transmissions.UpdateTransmissionRequest;
+import com.turkcell.rentacar.business.messages.TransmissionMessages;
 import com.turkcell.rentacar.core.utilities.exceptions.types.BusinessException;
 import com.turkcell.rentacar.dataAccess.abstracts.TransmissionRepository;
 import com.turkcell.rentacar.entities.concretes.Transmission;
@@ -16,13 +17,13 @@ public class TransmissionBusinessRules {
     public void isTransmissionExistByUpdateRequest(UpdateTransmissionRequest updateTransmissionRequest ){
         Optional<Transmission> transmission = this.transmissionRepository.findById(updateTransmissionRequest.getId());
         if (transmission.isEmpty()){
-            throw new BusinessException("Transmission Does not Exist");
+            throw new BusinessException(TransmissionMessages.TRANSMISSION_NOT_EXIST);
         }
     }
     public void isTransmissionExistById(int id  ){
         Optional<Transmission> transmission = this.transmissionRepository.findById(id);
         if (transmission.isEmpty()){
-            throw new BusinessException("Transmission Does not Exist");
+            throw new BusinessException(TransmissionMessages.TRANSMISSION_NOT_EXIST);
         }
     }
 }

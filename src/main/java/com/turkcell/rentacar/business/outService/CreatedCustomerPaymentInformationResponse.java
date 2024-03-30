@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreatedPaymentResponse {
+public class CreatedCustomerPaymentInformationResponse {
     private boolean makePayment;
 }

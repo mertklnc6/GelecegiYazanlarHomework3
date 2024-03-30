@@ -29,7 +29,7 @@ public class CarManager implements CarService {
         this.modelBusinessRules.isModelExistById(createCarRequest.getModelId());
         Car car = this.modelMapperService.forRequest().map(createCarRequest,Car.class);
 
-        car.setState(this.carBusinessRules.setCarStatefromIntegertoEnum(createCarRequest.getState()));
+        car.setState(this.carBusinessRules.setCarStateFromIntegerToEnum(createCarRequest.getState()));
         car.setCreatedDate(LocalDateTime.now());
         return this.modelMapperService.forResponse().map(this.carRepository.save(car),CreatedCarResponse.class);
     }

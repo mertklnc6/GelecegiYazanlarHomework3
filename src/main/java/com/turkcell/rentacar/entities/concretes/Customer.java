@@ -1,5 +1,6 @@
 package com.turkcell.rentacar.entities.concretes;
 
+import com.turkcell.rentacar.business.outService.CustomerPaymentInformation;
 import com.turkcell.rentacar.core.entities.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -32,6 +33,4 @@ public class Customer extends BaseEntity {
     @JoinColumn(name = "individual_id", referencedColumnName = "id")
     private IndividualCustomer individualCustomer;
 
-    @OneToMany(mappedBy = "customer")
-    List<Payment> payments;
 }

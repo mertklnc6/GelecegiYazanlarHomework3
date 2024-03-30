@@ -1,5 +1,6 @@
 package com.turkcell.rentacar.business.rules;
 
+import com.turkcell.rentacar.business.messages.CustomerMessages;
 import com.turkcell.rentacar.core.utilities.exceptions.types.BusinessException;
 import com.turkcell.rentacar.dataAccess.abstracts.IndividualCustomerRepository;
 import com.turkcell.rentacar.entities.concretes.IndividualCustomer;
@@ -15,8 +16,8 @@ public class IndividualCustomerBusinessRules {
 
     public void isIndividualCustomerExistById(int id){
        Optional<IndividualCustomer>  individualCustomer = this.individualCustomerRepository.findById(id);
-       if (!individualCustomer.isPresent()){
-           throw new BusinessException("Individual customer Does not exist");
+       if (individualCustomer.isEmpty()){
+           throw new BusinessException(CustomerMessages.INDIVIDUAL_CUSTOMER_NOT_EXIST);
        }
     }
 }
