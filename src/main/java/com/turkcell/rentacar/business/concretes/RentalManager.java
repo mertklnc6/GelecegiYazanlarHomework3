@@ -1,12 +1,15 @@
 package com.turkcell.rentacar.business.concretes;
 
+import com.turkcell.rentacar.business.abstracts.PaymentService;
 import com.turkcell.rentacar.business.abstracts.RentalService;
+import com.turkcell.rentacar.business.dtos.requests.payments.CreatePaymentRequest;
 import com.turkcell.rentacar.business.dtos.requests.rental.CreateRentalRequest;
 import com.turkcell.rentacar.business.dtos.requests.rental.UpdateRentalRequest;
 import com.turkcell.rentacar.business.dtos.responses.rental.*;
 import com.turkcell.rentacar.business.rules.RentalBusinessRules;
 import com.turkcell.rentacar.core.utilities.mapping.ModelMapperService;
 import com.turkcell.rentacar.dataAccess.abstracts.RentalRepository;
+import com.turkcell.rentacar.entities.concretes.Payment;
 import com.turkcell.rentacar.entities.concretes.Rental;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,7 +24,7 @@ public class RentalManager implements RentalService {
     private RentalRepository rentalRepository;
     private ModelMapperService modelMapperService;
     private RentalBusinessRules rentalBusinessRules;
-
+    private PaymentService paymentService;
     @Override
     public CreatedRentalResponse add(CreateRentalRequest createRentalRequest) {
         Rental rental = this.modelMapperService.forRequest().map(createRentalRequest, Rental.class);
@@ -29,10 +32,18 @@ public class RentalManager implements RentalService {
         this.rentalBusinessRules.checkDatesAreCorrect(rental);
         this.rentalBusinessRules.isCarExistById(rental);
         this.rentalBusinessRules.isCarAvailable(rental);
-        //Customer id sine göre customerExist kontrolü yapılmalı.
         this.rentalBusinessRules.compareCarAndCustomerFindexScore(rental);
-
         rental.setTotalPrice(rentalBusinessRules.calculateTotalPriceofRental(rental));
+
+
+        this.rentalBusinessRules.checkCustomerBalanceForPayment(rental);
+        this.rentalRepository.save(rental);
+
+        Payment payment = new Payment();
+        payment.setRental(rental);
+        CreatePaymentRequest createPaymentRequest =this.modelMapperService.forRequest().map(payment, CreatePaymentRequest.class);
+        this.paymentService.add(createPaymentRequest);
+
         return this.modelMapperService.forResponse().map(this.rentalRepository.save(rental), CreatedRentalResponse.class);
     }
     @Override

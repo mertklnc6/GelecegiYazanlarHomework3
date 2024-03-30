@@ -2,10 +2,7 @@ package com.turkcell.rentacar.entities.concretes;
 
 import com.fasterxml.jackson.databind.ser.Serializers;
 import com.turkcell.rentacar.core.entities.BaseEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,4 +27,7 @@ public class Rental extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "car_id")
     private Car car;
+
+    @OneToOne(mappedBy = "rental")
+    private Payment payment;
 }

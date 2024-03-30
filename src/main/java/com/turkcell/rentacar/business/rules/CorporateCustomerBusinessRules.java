@@ -1,5 +1,6 @@
 package com.turkcell.rentacar.business.rules;
 
+import com.turkcell.rentacar.business.messages.CustomerMessages;
 import com.turkcell.rentacar.core.utilities.exceptions.types.BusinessException;
 import com.turkcell.rentacar.dataAccess.abstracts.CorporateCustomerRepository;
 import com.turkcell.rentacar.entities.concretes.CorporateCustomer;
@@ -15,8 +16,8 @@ public class CorporateCustomerBusinessRules {
 
     public void isCorporateCustomerExistById(int id){
         Optional<CorporateCustomer> corporateCustomer = this.corporateCustomerRepository.findById(id);
-        if(!corporateCustomer.isPresent()){
-            throw new BusinessException("CorporateCustomer Does not exist");
+        if(corporateCustomer.isEmpty()){
+            throw new BusinessException(CustomerMessages.CORPARATE_CUSTOMER_NOT_EXIST);
         }
     }
 }
