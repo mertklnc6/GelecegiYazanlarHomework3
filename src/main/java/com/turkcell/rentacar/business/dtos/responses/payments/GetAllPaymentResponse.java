@@ -11,4 +11,7 @@ import lombok.NoArgsConstructor;
 public class GetAllPaymentResponse {
     private int id;
     private int rentalId;
+    private int customerId;
+    private int carId;
+    private double totalPrice;
 }

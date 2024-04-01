@@ -9,4 +9,5 @@ import java.util.List;
 public interface PaymentService {
     CreatedPaymentResponse add(CreatePaymentRequest createPaymentRequest);
     List<GetAllPaymentResponse> getAll();
+    void delete(int id);
 }

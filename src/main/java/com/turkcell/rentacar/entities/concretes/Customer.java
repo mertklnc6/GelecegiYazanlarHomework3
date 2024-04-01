@@ -1,6 +1,5 @@
 package com.turkcell.rentacar.entities.concretes;
 
-import com.turkcell.rentacar.business.outService.CustomerPaymentInformation;
 import com.turkcell.rentacar.core.entities.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
