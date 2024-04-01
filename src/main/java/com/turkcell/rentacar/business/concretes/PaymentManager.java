@@ -4,6 +4,7 @@ import com.turkcell.rentacar.business.abstracts.PaymentService;
 import com.turkcell.rentacar.business.dtos.requests.payments.CreatePaymentRequest;
 import com.turkcell.rentacar.business.dtos.responses.payments.CreatedPaymentResponse;
 import com.turkcell.rentacar.business.dtos.responses.payments.GetAllPaymentResponse;
+import com.turkcell.rentacar.business.rules.PaymentBusinessRules;
 import com.turkcell.rentacar.core.utilities.mapping.ModelMapperService;
 import com.turkcell.rentacar.dataAccess.abstracts.PaymentRepository;
 import com.turkcell.rentacar.entities.concretes.Payment;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 public class PaymentManager implements PaymentService {
     private PaymentRepository paymentRepository;
     private ModelMapperService modelMapperService;
+    private PaymentBusinessRules paymentBusinessRules;
     @Override
     public CreatedPaymentResponse add(CreatePaymentRequest createPaymentRequest) {
         Payment payment = this.modelMapperService.forRequest().map(createPaymentRequest, Payment.class);
@@ -30,5 +32,11 @@ public class PaymentManager implements PaymentService {
         List<Payment> payments = this.paymentRepository.findAll();
         return payments.stream().map(payment -> this.modelMapperService.forResponse().
                 map(payment, GetAllPaymentResponse.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public void delete(int id) {
+        this.paymentBusinessRules.isPaymentExistById(id);
+        this.paymentRepository.deleteById(id);
     }
 }

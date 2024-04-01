@@ -12,14 +12,13 @@ import java.util.List;
 @RequestMapping("api/v1/payments")
 public class PaymentController {
     private PaymentService paymentService;
- /*   @PostMapping("/payment")
-    public CreatedCustomerPaymentInformationResponse makePayment(@RequestBody CreatePaymentRequest createPaymentRequest) {
-        CreatedCustomerPaymentInformationResponse createdCustomerPaymentInformationResponse = new CreatedCustomerPaymentInformationResponse();
-        createdCustomerPaymentInformationResponse.setMakePayment(true);
-        return createdCustomerPaymentInformationResponse;
-    }*/
     @GetMapping("/getAll")
     public List<GetAllPaymentResponse> getAll(){
         return this.paymentService.getAll();
+    }
+
+    @DeleteMapping("delete/{id}")
+    public void delete(@PathVariable int id){
+        this.paymentService.delete(id);
     }
 }

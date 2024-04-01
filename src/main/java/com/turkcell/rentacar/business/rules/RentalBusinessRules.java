@@ -2,6 +2,7 @@ package com.turkcell.rentacar.business.rules;
 
 import com.turkcell.rentacar.adapter.FindexService;
 import com.turkcell.rentacar.adapter.result.FindexResult;
+import com.turkcell.rentacar.business.outService.CreateBankInformationRequest;
 import com.turkcell.rentacar.business.messages.CarMessages;
 import com.turkcell.rentacar.business.messages.RentalMessages;
 import com.turkcell.rentacar.business.outService.BankService;
@@ -70,7 +71,11 @@ public class RentalBusinessRules {
         }
    }
    public void checkCustomerBalanceForPayment(Rental rental){
-       if ( ! this.bankService.makePayment(rental).isMakePayment()){
+        //bir arayuz acildi ve kullanıcıdan banka bilgileri alindi. Daha sonra Bu bilgiler bankaya iletilecek.
+
+       if ( ! this.bankService.makePayment(new CreateBankInformationRequest(
+               (int) rental.getTotalPrice(),"5458963231","02","2028","455"))
+               .isMakePayment()){
            throw new BusinessException(RentalMessages.PAYMENT_FAILED);
        }
    }
