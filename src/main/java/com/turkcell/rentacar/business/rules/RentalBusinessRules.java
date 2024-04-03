@@ -10,11 +10,14 @@ import com.turkcell.rentacar.core.utilities.exceptions.types.BusinessException;
 import com.turkcell.rentacar.dataAccess.abstracts.CarRepository;
 import com.turkcell.rentacar.dataAccess.abstracts.RentalRepository;
 import com.turkcell.rentacar.entities.concretes.Car;
+import com.turkcell.rentacar.entities.concretes.Product;
 import com.turkcell.rentacar.entities.concretes.Rental;
+import com.turkcell.rentacar.entities.concretes.RentalProduct;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,6 +28,7 @@ public class RentalBusinessRules {
     private CarBusinessRules carBusinessRules;
     private RentalRepository rentalRepository;
     private BankService bankService;
+    private ProductBusinessRules productBusinessRules;
 
     public int calculateTotalPriceofRental(Rental rental) {
         int days = (int) ChronoUnit.DAYS.between(rental.getStartDate(), rental.getEndDate());
@@ -70,13 +74,24 @@ public class RentalBusinessRules {
             throw new BusinessException(RentalMessages.DATES_ARE_INCORRECT);
         }
    }
-   public void checkCustomerBalanceForPayment(Rental rental){
-        //bir arayuz acildi ve kullanıcıdan banka bilgileri alindi. Daha sonra Bu bilgiler bankaya iletilecek.
+   public int checkCustomerBalanceForPayment(Rental rental){
+       int quantity =0;
+       int totalPrice= 0;
+       for (RentalProduct product: rental.getProducts()){
+          quantity = product.getProduct().getQuantity();
+          this.productBusinessRules.checkProductQuantityLimit(quantity,product.getId());   //İstenilen adette var mı ?
+          totalPrice += this.productBusinessRules.calculateTotalPriceofProductRequest(quantity,product.getId());  //İstenilen adette varsa adet * fiyatı ver
+        }
 
-       if ( ! this.bankService.makePayment(new CreateBankInformationRequest(
-               (int) rental.getTotalPrice(),"5458963231","02","2028","455"))
+       int result = ((int) rental.getTotalPrice()+totalPrice);
+       if ( ! this.bankService.makePayment(new CreateBankInformationRequest(result
+                       ,"5458963231","02","2028","455"))
                .isMakePayment()){
            throw new BusinessException(RentalMessages.PAYMENT_FAILED);
        }
+
+        this.productBusinessRules.reduceQuantityofProductsinStore(rental.getProducts()); //İstenilen adette product odendiyse, depoda olan miktardan ödenilen sayisini cıkar.
+
+       return result;
    }
 }

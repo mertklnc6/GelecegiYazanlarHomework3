@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("api/v1/rental")
+@RequestMapping("api/v1/rentals")
 public class RentalsController {
     private RentalService rentalService;
     @PostMapping("/create")

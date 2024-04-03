@@ -1,15 +1,14 @@
 package com.turkcell.rentacar.entities.concretes;
 
 import com.turkcell.rentacar.core.entities.BaseEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,12 +16,18 @@ import java.util.List;
 @Entity
 @Table(name = "products")
 public class Product extends BaseEntity {
-    private String color;
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "price")
     private double price;
 
-    @OneToMany(mappedBy = "product")
-    private List<Scooter> scooters;
+    @Column(name = "quantity")
+    private int quantity;
 
-    @OneToMany(mappedBy = "product")
-    private List<BabyChair> babyChairs;
+    @Column(name = "description")
+    private String description;
+
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    private List<RentalProduct> rentals;
 }

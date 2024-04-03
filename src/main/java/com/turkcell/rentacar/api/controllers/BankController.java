@@ -16,7 +16,7 @@ public class BankController {
     public CreatedBankInformationResponse check(@RequestBody CreateBankInformationRequest createBankInformationRequest){
         CreatedBankInformationResponse createdBankInformationResponse = new CreatedBankInformationResponse();
         createdBankInformationResponse
-                .setMakePayment(Math.random() % 2000 > createBankInformationRequest.getTotalPrice());
+                .setMakePayment(true);
         return createdBankInformationResponse;
     }
 }

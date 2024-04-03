@@ -30,6 +30,7 @@ public class PaymentManager implements PaymentService {
     @Override
     public List<GetAllPaymentResponse> getAll() {
         List<Payment> payments = this.paymentRepository.findAll();
+
         return payments.stream().map(payment -> this.modelMapperService.forResponse().
                 map(payment, GetAllPaymentResponse.class)).collect(Collectors.toList());
     }

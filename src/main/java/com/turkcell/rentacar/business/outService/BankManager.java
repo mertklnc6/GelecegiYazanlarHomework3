@@ -1,10 +1,12 @@
 package com.turkcell.rentacar.business.outService;
 
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
+@AllArgsConstructor
 public class BankManager implements BankService {
     private RestTemplate restTemplate;
 

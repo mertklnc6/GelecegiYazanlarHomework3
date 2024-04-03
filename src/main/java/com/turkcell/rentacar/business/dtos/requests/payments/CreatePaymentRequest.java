@@ -9,5 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class CreatePaymentRequest {
+    private int totalPrice;
     private Rental rental;
 }

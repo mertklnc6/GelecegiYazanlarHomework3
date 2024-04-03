@@ -8,6 +8,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -30,4 +34,7 @@ public class Rental extends BaseEntity {
 
     @OneToOne(mappedBy = "rental")
     private Payment payment;
+
+    @OneToMany(mappedBy = "rental", fetch = FetchType.LAZY)
+    private List<RentalProduct> products;
 }
